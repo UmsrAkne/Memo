@@ -40,3 +40,22 @@ tag WPF, XAML, ContextMenu, ListView, DataContext
 ContextMenu と Setter が離れているのが少し納得行かないが、目的を達成。正直できただけで理解できていないのでメモしておく。
 
 ---
+
+## 一つのウィンドウを分割表示する
+tag WPF, XAML, GridSplitter, 分割
+
+```
+<Grid>
+    <GridSplitter Grid.Row="3"
+                    Height="3"
+                    HorizontalAlignment="Stretch"
+                    />
+</Grid>
+```
+
+### 解説
+ウィンドウを分割したい。あとユーザー側で分割の表示をドラッグで変えられるようにしたい場合、 <Grid> タグで <GridSplitter> を挟み込んで使用する。  
+注意点として、このスプリッター単体でグリッドのスペースを一つ専有する。既にコントロールが存在するスペースに置くと中央で重なってしまう。  
+あと HorizontalAlignment="Stretch" は必須。無いとスプリッターを摘むことができない。
+
+---
