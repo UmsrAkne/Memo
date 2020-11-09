@@ -59,3 +59,122 @@ tag WPF, XAML, GridSplitter, 分割
 あと HorizontalAlignment="Stretch" は必須。無いとスプリッターを摘むことができない。
 
 ---
+
+## ListView のマウスオーバー時の効果を消す
+
+```
+    <Style x:Key="ListViewItemContainerStyle" TargetType="ListViewItem">
+        <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListViewItem">
+                    <Border x:Name="Border"
+                            SnapsToDevicePixels="true"
+                            BorderBrush="Transparent"
+                            BorderThickness="1"
+                            Background="{TemplateBinding Background}" >
+
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="MouseOver" />
+                                <VisualState x:Name="Disabled" />
+                            </VisualStateGroup>
+
+                            <VisualStateGroup x:Name="SelectionStates">
+                                <VisualState x:Name="Unselected" />
+                                <VisualState x:Name="Selected">
+                                    <Storyboard>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border"
+                                                Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)">
+                                            <EasingColorKeyFrame KeyTime="0:0:0.3"
+                                         Value="Blue" />
+                                        </ColorAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+
+                                <VisualState x:Name="SelectedUnfocused">
+                                    <Storyboard>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border"
+                                                Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)">
+                                            <EasingColorKeyFrame KeyTime="0"
+                                         Value="LightBlue" />
+                                        </ColorAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <ContentPresenter/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+```
+
+### 解説
+いつもやるやつ。MSDNからコピってちょっとイジったやつ。上記をリストビューのスタイルに適用すれば可。
+
+### 備考
+`<ControlTemplate>` 直下の `<Border.Background>` が {TemplateBinding} となっているが、これはテンプレートバインディングでないとダメ。無指定でも、直接色指定でも不可。これをしないとスタイルを適用したリストビューのリストビューアイテムの背景色を設定することができない。
+
+```
+<Storyboard>
+    <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border"
+            Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)">
+        <EasingColorKeyFrame KeyTime="0:0:0.3"
+        Value="Blue" />
+    </ColorAnimationUsingKeyFrames>
+</Storyboard>
+```
+
+### アニメーションに関して
+上記の `<StoryBoard>` に関しても記述しておく。  
+まず、`<ColorAnimationUsingKeyFrames>` は複数種あるアニメーションの一つで、名前の通り色変更を行う。  
+TargetName="Border" は対象オブジェクトを表すが、ここで言う Border というのは x:Name="Border" のことで型名ではない。
+
+次に、TargetProperty="(Borader.BorderBrush).(SolidColorBrush.Color)" は変更の対象となるプロパティを指定している。完全に理解しているわけではないが、  
+
+`(Border.BorderBrush) は Border 型の BorderBrush プロパティ,`
+
+`(SolidColorBrush.Color) は SolidColorBrush 型の Color プロパティ`
+
+をそれぞれ表現しているっぽい。ただ、この妙な記述方法の意味はちょっとわからない。
+最後に色変更のアニメなので、`Value` には普通に色を表す文字列を入れればOK
+
+### その他
+今回、上記をやろうとして、定義済みの ItemContainerStyle と被ってうまくスタイルが適用されなかった。未だにこの辺の階層関係がいまいち理解できない。複雑すぎない？
+
+---
+## Resouce を読み込む
+tag, WPF, XAML, Resource, ResourceDictionary
+
+リソースファイル（VisualStudioに生成してもらうやつ)
+
+```
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    >
+    <Style x:Key="ListViewItemContainerStyle" TargetType="ListViewItem">
+        <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+    </Style>
+</ResouceDictionary>
+```
+
+リソースを使う側の記述
+
+```
+<Window.Resources>
+    <ResourceDictionary>
+        <ResourceDictionary.MergedDictionaries>
+            <ResourceDictionary Source="../res/Dictionary1.xaml"/>
+        </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+</Window.Resources>
+```
+
+今回、Source に書くパスは相対指定にしてある。1階層上にある別のディレクトリを指定。  
+一応、Windowのリソースに書いてあるけど、多分他の要素のリソースにも書けると思われる（未検証）
+
