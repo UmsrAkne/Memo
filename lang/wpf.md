@@ -178,3 +178,56 @@ tag, WPF, XAML, Resource, ResourceDictionary
 今回、Source に書くパスは相対指定にしてある。1階層上にある別のディレクトリを指定。  
 一応、Windowのリソースに書いてあるけど、多分他の要素のリソースにも書けると思われる（未検証）
 
+---
+## 特定のコントロールにデータコンテキストを適用する。
+tag DataContext, Style, Setter
+
+現状の設計方法だと、MainWindowViewModel （もしくはそこに乗っているモデル）のコードがガンガン増えていくため、ちょっと良くないなと思い検証。
+機能が多くなりそうなコントロールのビューモデルを Window のビューモデルから分離出来ないかと考えた。
+
+### xaml.cs 一部抜粋
+```
+<Window xmlns:vm="clr-namespace:BlankApp1.ViewModels">
+
+<ListView>
+    <ListView.Style>
+        <Style TargetType="ListView">
+            <Style.Setters>
+
+                <Setter Property="DataContext">
+                    <Setter.Value>
+                        <vm:ListViewModel/>
+                    </Setter.Value>
+                </Setter>
+
+                <Setter Property="ItemsSource" Value="{Binding Strings}"/>
+
+            </Style.Setters>
+        </Style>
+    </ListView.Style>
+
+</ListView>
+```
+
+### ListViewModel.cs
+```
+namespace BlankApp1.ViewModels {
+    class ListViewModel : BindableBase{
+        private List<string> strings = new List<String>();
+        public List<string> Strings {
+            get => strings;
+            set => SetProperty(ref strings, value);
+        }
+    }
+}
+```
+
+### 解説
+ListView の DataContext に、Window で定義されているデータコンテキストとは別のデータコンテキスト(ListViewModel)を適用するサンプル。
+
+最初、ListView 要素内で直接 ItemsSource="{Binding Strings}" し、ListView.DataContext 要素内に vm:ListViewModel 要素でデータコンテキストを代入というやり方をしたところ、バインディングエラーが発生。見た目上は動作するが、エラーが発生している以上、正道ではなさそう。  
+
+これは推測だが、ListView が作成された時点では、データコンテキストは Window.DataContext を参照しているためだと思われる。  
+なので、少しやり方を変えて、Style.Setters を使用し、ListView が作成されてから DataContext, ItemsSource をセットする方式に変更することでエラーを消した。その時のソースが上記となっている。
+
+もっとスマートなやり方があればそちらを使いたいがちょっと思いつかない。
