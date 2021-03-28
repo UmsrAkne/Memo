@@ -34,3 +34,18 @@
     #ssh -i ~/.ssh/newUserName newUserName@aaa.bbb.ccc.ddd
         ssh ログイン
     
+## ssh root ログインを禁止する
+    #sudo su -
+        ssh ではなく普通にログイン
+        
+    # ssh -i keyName root@aaa.bbb.ccc.ddd
+        ssh で root ログインを試行。ec2-user でログインしろと言われた。
+        ec2 はデフォルトで root に ssh ログインはできないらしいので OK か。
+    
+## ユーザーを削除する
+    #sudo userdel -r userName
+        -r オプションをつけるとホームディレクトリも一緒に削除
+        
+## ユーザーの一覧を確認する
+    #sudo less /etc/passwd
+      
