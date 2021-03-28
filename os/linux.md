@@ -42,6 +42,28 @@
         ssh で root ログインを試行。ec2-user でログインしろと言われた。
         ec2 はデフォルトで root に ssh ログインはできないらしいので OK か。
     
+## ssh のポートを変更する
+    #sudo lsof -i:22
+        指定した番号のポートが使用されているか調べる。表示がなければ未使用ポート
+        
+    #sudo vim /etc/ssh/sshd.config
+        #Port 22 の記述を探す。
+
+        いきなりポートを変更する前に
+
+        Port 22
+        Port xxxx
+        
+        のように記述し、任意のポートでログインできるか確認する。
+        
+    #sudo systemctl restart sshd.service
+        sshdを再起動
+        
+    #ssh -i keyName userName@aaa.bbb.ccc.ddd -p xxxxx
+        -p に続いて番号を指定することでポートを指定できる。
+        EC2 の場合はセキュリティルール（インバウンド）の設定も必要なので注意
+        
+    
 ## ユーザーを削除する
     #sudo userdel -r userName
         -r オプションをつけるとホームディレクトリも一緒に削除
