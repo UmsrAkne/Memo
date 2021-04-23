@@ -80,3 +80,18 @@ gvim の場合、path は普通にウィンドウズの形式でOK
 上記をデフォルトにする。  
 .vimrc に記述推奨  
 `:set autochdir`
+
+## 文字コード（エンコード）を指定する。
+
+Shift JIS で指定
+`:edit ++encoding=sjis
+
+cp932 でも同様の意味？ 因みに cp はコードページの略らしい
+`:e ++enc=cp932
+
+UTF-8 で指定
+`:edit ++encoding=utf-8
+
+## 現在のエンコードの確認
+`:se enc?
+`:se fenc?
