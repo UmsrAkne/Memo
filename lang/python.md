@@ -199,7 +199,7 @@ python では リスト、タプル、辞書、集合のこと。
 	>>> if not A == 4 :
 	... 	print("not 4")
 	... else :
-	... 	print("4");
+	... 	print("4")
 	...
 	not 4
 	
@@ -215,7 +215,7 @@ python では リスト、タプル、辞書、集合のこと。
 	A is ?
 	
 	# 尚、インデントを使用せずに１行で書く方法も可能らしい。あまり使わない方向で行きたい。
-	>>> if not A == 4 : print("not 4");
+	>>> if not A == 4 : print("not 4")
 	...
 	not 4
 
@@ -255,5 +255,11 @@ python では リスト、タプル、辞書、集合のこと。
 	b
 	c
 	
-	>>> for index in range(5) :
-	... 	print(index);
+	# range は指定範囲の数値を返す。
+	# range(int, int) で指定した場合は、第一引数と第二引数の間の数値を返す。
+	>>> for index in range(2) :
+	... 	print(index)
+	...
+	0
+	1
+	2
