@@ -225,3 +225,35 @@ python では リスト、タプル、辞書、集合のこと。
 
 	# x に対して、a > 0 ならば 10 それ以外なら 20 を代入する。
 	>>> x = 10 if a > 0 else 20
+
+### while
+
+	# 指定した条件が真の間繰り返す。普通の while
+	>>> while counter < 3 :
+	... 	print(counter)
+	... 	counter += 1
+	...
+	0
+	1
+	2
+
+### for
+
+	# python の for にはインデックスが無い？
+	>>> array = [1, 2, 3]
+	>>> for number in array :
+	... 	print(str(number))
+	...
+	1
+	2
+	3
+	
+	# リストやタプルだけでなく文字列も列挙可能。
+	>>> for letter in "abc" :
+	... 	print(letter)
+	a
+	b
+	c
+	
+	>>> for index in range(5) :
+	... 	print(index);
