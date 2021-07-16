@@ -10,6 +10,21 @@ settings.json ファイルを編集する。
 
     "terminal.integrated.shell.windows": "C:\\Program Files\\Git\\bin\\bash.exe"
 
+現在では上記は非推奨の警告が出た。推奨されるフォーマットは下記。
+
+    "terminal.integrated.defaultProfile.windows": "Git Bash",
+    "terminal.integrated.profiles.windows": {
+        "Git Bash": {
+            "path": "C:\\Program Files\\Git\\bin\\bash.exe",
+            "args": [
+                "-l"
+            ]
+        },
+        "PowerShell": {
+            "source": "PowerShell"
+        }
+    }
+
 settings.json は３種類ある。
 * 無表記(グローバル) 
 * ワークベンチ(ワークスペース)
