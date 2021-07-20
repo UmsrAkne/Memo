@@ -37,6 +37,16 @@ settings.json は３種類ある。
 コマンドプロンプトでも構わないならば設定しなくても変更可能。  
 どっちも使い方がわからなかったため（特にパワーシェルさん）バッシュに変更した。
 
+## プレビューモードをオフにする。
+
+プレビューモードでファイルを開いてくれる便利機能をオフにする設定。  
+プレビューモードでファイルを開いている場合、新しくファイルを開くとタブが上書きされたりする。  
+不要なのでオフにする。
+
+    "editor.rename.enablePreview": false,
+    "workbench.editor.enablePreview": false,
+    "workbench.editor.enablePreviewFromQuickOpen": false
+
 ## キーボードショートカットの変更
 
 vscode では、キーボードショートカットの変更も .json ファイルに記入することで変更する。  
