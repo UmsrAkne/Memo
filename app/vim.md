@@ -117,6 +117,19 @@ UTF-8 で指定
 `:se enc?`  
 `:se fenc?`
 
+## ファイルの改行コードを確認する
+
+	:set fileformat?
+	:set ff?
+
+## ファイルの改行コードを変更する
+
+	:set fileformat=dos
+	:set ff=unix
+
+指定できる改行コードは dos(CRLF), unix(LF), mac(CR) のいずれか。  
+改行コードをセットしたらファイルは変更される。
+
 ## .vimrc の記述
 
 	" .vimrc に追記すると、vim で使用する端末を bash に変更できる。(bash.exe が存在する前提)
