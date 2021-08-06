@@ -104,3 +104,37 @@ MainActivity.onCreate にフラグメントを乗っけるコードを追加す�
 			transaction.commit();
 		}
 	}
+
+## ListView
+
+指定した要素をリスト表示する android の view の使用方法
+
+レイアウトファイル。 Layout 要素に挟み込んで使用。
+
+	<ListView
+		...
+		android:id="@+id/testListView"/>
+
+クラスファイル
+
+	import android.widget.ArrayAdapter;
+	import android.widget.ListView;
+
+    private ListView listView;
+    private ArrayAdapter<String> upListViewAdapter;
+
+	public xxx m(){
+		listView = view.findViewById(R.id.mainUpListView);
+		
+		// android.R.layout.simple_list_item_1 はデフォルトで準備されている。
+		upListViewAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1);
+		listView.setAdapter(upListViewAdapter);
+
+		// 要素の追加
+		upListViewAdapter.add("test1");
+	}
+
+ListView への要素の追加は、ArrayAdapter を介して行う。  
+生成した ArrayAdapter を setAdapter でセットすることで要素を追加することが可能になる。  
+上記サンプルはフラグメントのコードのため、ArrayAdapter のコンストラクタの第一引数に getActivity() を使用。  
+アクティビティに上記コードを記述する際には this でOK。
