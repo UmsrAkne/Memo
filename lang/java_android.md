@@ -138,3 +138,8 @@ ListView への要素の追加は、ArrayAdapter を介して行う。
 生成した ArrayAdapter を setAdapter でセットすることで要素を追加することが可能になる。  
 上記サンプルはフラグメントのコードのため、ArrayAdapter のコンストラクタの第一引数に getActivity() を使用。  
 アクティビティに上記コードを記述する際には this でOK。
+
+## フラグメントからアクティビティを取得
+
+フラグメントから Context が必要な処理を行う場合は `Fragment#getActivity()` を使用。  
+フラグメントを呼び出したアクティビティを取得することができる。  
