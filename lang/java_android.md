@@ -143,3 +143,156 @@ ListView への要素の追加は、ArrayAdapter を介して行う。
 
 フラグメントから Context が必要な処理を行う場合は `Fragment#getActivity()` を使用。  
 フラグメントを呼び出したアクティビティを取得することができる。  
+
+## Room の導入
+
+データベースを扱うライブラリ。Android 公式推奨。
+
+app/build.gradle の依存関係に以下を追記
+build.gradle はプロジェクト中に２つあるらしいので注意。(Module.app の方)
+
+	dependencies{
+
+		def room_version = "2.2.5"
+
+		implementation "androidx.room:room-runtime:$room_version"
+		annotationProcessor "androidx.room:room-compiler:$room_version"
+	}
+
+"kapt" を含む情報が出てくるがそっちではできなかった Kotlin 用？  
+上記を書いたら、Android Studio の右上あたりの Sync project ボタンを押す。ゾウアイコンのボタン。  
+尚、情報収集中にボタンが出ないとの投稿を見かけた。ない場合もある？
+
+次にデータベースの Entity (テーブルのデータ？) を作成する。  
+作成するというよりは、既存のデータクラスに追記する。  
+Todo.java を Entity として扱う。
+
+	import androidx.room.Entity;
+	import androidx.room.Ignore;
+	import androidx.room.PrimaryKey;
+
+	import java.util.Date;
+
+	@Entity(tableName = "todos")
+	public final class Todo {
+
+		@PrimaryKey
+		public int id;
+
+		private String title = "";
+
+		@Ignore
+		private Boolean completed;
+
+		@Ignore
+		private Date creationDateTime;
+
+		@Ignore
+		private Date completeDateTime;
+	}
+	
+今回、書く中でいくつか注意。
+
+ * Data 型は扱えない。SQLite だし当然だけど。int に変換してデータを用意する等の工夫が必要そう。  
+ * 外部からセットできない値はNG 。setter が存在しない旨のエラーが出力される。
+ 	* 上記に関して。setXXX メソッドがある場合は認識してくれているらしい。
+
+対策として @Ignore を付与すると、そのフィールドが無視される。
+
+続いて必要なクラスを作成していく。最初にインターフェース。  
+Database Access Object 略して DAO  
+インターフェースだけど SQL はここに記述。扱う型は先程の Entity クラスとなる。
+
+	package com.example.androidtodoapp;
+
+	import androidx.room.Dao;
+	import androidx.room.Delete;
+	import androidx.room.Insert;
+	import androidx.room.Query;
+
+	import java.util.List;
+
+	@Dao
+	public interface TodoDAO {
+		@Query("SELECT * FROM todos")
+		List<Todo> getAll();
+
+		@Insert
+		void insertAll(Todo... todos);
+
+		@Insert
+		void insert(Todo todo);
+
+		@Delete
+		void delete(Todo todo);
+	}
+
+以下で更に作成。以下２つは理解しきれてないので写経。  
+あえてシングルトンを採用しているのは、Room 制作側からの推奨とのこと。  
+複数のインスタンスを作る意味はほぼないらしい。
+
+抽象クラス AppDatabase
+
+	package com.example.androidtodoapp;
+
+	import androidx.room.Database;
+	import androidx.room.RoomDatabase;
+
+	@Database(entities = {Todo.class}, version = 1, exportSchema = false)
+	public abstract class AppDatabase extends RoomDatabase {
+		public abstract TodoDAO tododAO();
+	}
+
+AppDatabaseSingleton  
+database名等はここで設定しているっぽい。
+
+	package com.example.androidtodoapp;
+
+	import android.content.Context;
+	import androidx.room.Room;
+
+	public class AppDatabaseSingleton {
+		private static AppDatabase instance = null;
+
+		public static AppDatabase getInstance(Context context) {
+			if (instance != null) {
+				return instance;
+			}
+
+			instance = Room.databaseBuilder(context,
+					AppDatabase.class, "database-name").build();
+			return instance;
+		}
+	}
+	
+ラスト。今回はフラグメントに記述する。これもほぼネットのコードを写経。  
+以下は非同期処理を行うクラスをインナークラスとしてフラグメントに記述。  
+new DataStoreAsyncTask() で実行可能。
+Room のデータベースは同期処理では書けない。
+
+    private static class DataStoreAsyncTask extends AsyncTask<Void, Void, Integer> {
+        private WeakReference<Activity> weakActivity;
+        private AppDatabase db;
+        private StringBuilder sb;
+
+        public DataStoreAsyncTask(AppDatabase db, Activity activity) {
+            this.db = db;
+            weakActivity = new WeakReference<>(activity);
+        }
+
+        @Override
+        protected Integer doInBackground(Void... params) {
+            TodoDAO dao = db.tododAO();
+            dao.insert(new Todo());
+
+            return 0;
+        }
+
+        @Override
+        protected void onPostExecute(Integer code) {
+            Activity activity = weakActivity.get();
+            if(activity == null) {
+                return;
+            }
+        }
+    }
