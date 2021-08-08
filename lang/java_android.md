@@ -296,3 +296,22 @@ Room のデータベースは同期処理では書けない。
             }
         }
     }
+	
+## Log の出力
+
+Log クラスのメソッドを使用して出力が可能。
+
+	Log.v(string tag, string msg);
+	Log.i(string tag, string msg);
+	Log.d(string tag, string msg);
+	Log.e(string tag, string msg);
+	Log.w(string tag, string msg);
+
+ただし、機種依存なのか、手持ちのタブレットでのデバッグ時、 `Log.v, Log.d` は出力されなかった。  
+その他は出力可能なようなので、他でいくしか無さそう。
+
+調べた感じだと、HUAWEI の端末でデバッグ時に出力されないケースがあるらしい。  
+当方環境は `HUAWEI MediaPad M3 Lite 10 ` で上記症状を確認。
+
+通話アプリから特定の番号にかけることで呼び出すことができる設定画面から解決が可能とのこと（未確認）  
+当方環境が Wifi 専用タブレットであるため検証は不可。
