@@ -71,3 +71,46 @@
 ## ユーザーの一覧を確認する
     #sudo less /etc/passwd
       
+## 自動でアップデートさせる
+
+OS を使えるように鳴ったらまず
+
+    sudo yum update
+    
+OS を最新の状態にしたら
+
+    sudo yum install yum-cron
+
+自動更新を行ってくれるパッケージが入る。更に設定。
+    
+    sudo vi /etc/yum/yum-cron.conf
+    -> vim で /apply_updates
+    
+    - apply_updates = no
+    + apply_updates = yes
+
+カーネルの自動アップデートをしないようにする。  
+ネットの説明を流し読みした感じだと、カーネルは通常のアップデートと一緒にガンガンやるようなものでもないらしい。  
+不用意にやっているとサーバーが落ちたりする場合もあるとのこと。  
+たまにログインすた時に手動でやる程度でいい？
+
+    sudo vi /etc/yum.conf
+    [main] より下に追加
+    exclude=kernel*
+
+上記設定は `#exclude=kernel*` のように `#` を行頭につけてコメントアウトするか行自体を削除すれば無効にできる。  
+
+装備しただけでは意味がない。起動
+
+    sudo systemctl start yum-cron
+    sudo systemctl status yum-cron
+    
+２つ目のコマンドに対して `Active:active` の表示があれば起動している。
+
+更に OS起動時に自動で起動するようにする。
+
+    $ sudo systemctl enable yum-cron
+    $ sudo systemctl is-enabled yum-cron
+    enabled
+
+１つ目のコマンドで自動起動を有効に。２つ目のコマンドで `enabled` が返ってくれば起動済み。
