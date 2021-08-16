@@ -109,16 +109,25 @@ gvim の場合、path は普通にウィンドウズの形式でOK
 .vimrc に記述推奨  
 `:set autochdir`
 
-## 文字コード（エンコード）を指定する。
+## 文字コード（エンコード）を指定する
 
-Shift JIS で指定  
-`:edit ++encoding=sjis`
+	Shift JIS で指定  
+	:edit ++encoding=sjis
 
-cp932 でも同様の意味？ 因みに cp はコードページの略らしい  
-`:e ++enc=cp932`
+	cp932 でも同様の意味？ 因みに cp はコードページの略らしい  
+	:e ++enc=cp932
 
-UTF-8 で指定  
-`:edit ++encoding=utf-8`
+	UTF-8 で指定  
+	:edit ++encoding=utf-8
+	
+## ファイルのエンコードを設定する
+
+	:set fileencoding=sjis
+	:set fenc=utf-8
+	
+++encoding={encoding} では、ファイルを指定した文字コードで開く(ファイルは変更しない)  
+fileencoding={encoding} はファイルの文字コードを指定したコードに設定する（ファイルを変更する)  
+わかりにくいが、役割が全く異なるコマンドとなっている。
 
 ## 現在のエンコードの確認
 `:se enc?`  
