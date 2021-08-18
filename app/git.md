@@ -17,3 +17,15 @@ github から http で `git clone` した場合、`push` する際にユーザ�
 	git remote add origin https://github.com/UserName/repoName
 	
 いずれかの形式でも追加可能。
+
+### 登録されているリモートリポジトリの確認
+
+	git remote
+	
+登録されているリポジトリが出力される。未登録の場合は何も表示されない。
+
+### リモートリポジトリの登録解除
+
+	git remote remove targetName
+
+対象の名前は通常は `origin` で登録されている。 `git remote` で確認することも可能。	
