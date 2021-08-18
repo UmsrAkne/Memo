@@ -10,3 +10,10 @@ github から http で `git clone` した場合、`push` する際にユーザ�
  	git remote set-url origin git@github.com:userName/repo
 
 `git remote set-url` に関しての詳細は後ほど調べる。以上走り書き。
+
+## リモートリポジトリの追加
+
+	git remote add origin git@github.com:UserName/repoName.git
+	git remote add origin https://github.com/UserName/repoName
+	
+いずれかの形式でも追加可能。
