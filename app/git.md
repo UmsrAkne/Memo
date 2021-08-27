@@ -29,3 +29,27 @@ github から http で `git clone` した場合、`push` する際にユーザ�
 	git remote remove targetName
 
 対象の名前は通常は `origin` で登録されている。 `git remote` で確認することも可能。	
+
+
+### push の際にパスとアカウント名を確認された場合
+
+	// 通信を ssh に変更
+	#  (master>)> git remote set-url origin git@github.com
+
+	// https:// -> git@ になっていることを確認
+	// -v オプションはリモートリポジトリの名前と url を表示する。
+	#  (master>)> git remote -v
+	origin  git@github.com (fetch)
+	origin  git@github.com (push)
+
+	// リモートリポジトリをセットする。ユーザー名とリポジトリ名は適宜置き換え
+	#  (master>)> git remote set-url origin git@github.com:userName/repoName.git
+
+	// リモートリポジトリがセットされているのを確認する。
+	#  (master>)> git remote -v
+	origin  git@github.com:userName/repoName.git (fetch)
+	origin  git@github.com:userName/repoName.git (push)
+
+	#  (master>)> git push
+
+	// push できる
