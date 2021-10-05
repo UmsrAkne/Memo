@@ -1,0 +1,89 @@
+# EntityFramework の使用
+
+## 概要
+
+DB をいい感じに利用できるようにする EntityFramework を使用するサンプル。(sqlite)
+
+## 導入
+
+まずは、Nuget からパッケージをインストールする。今回は SQlite を使用するので `.Sqlite` もインストールする。  
+こちらを入れておかないと、後に出てくる拡張メソッドが使用できない。
+
+	Microsoft.EntityFrameworkCore 
+	Microsoft.EntityFrameworkCore.Sqlite
+
+テーブルとして作成するデータを定義する。
+プロパティの上部についている `[Key]` などの文字列はアノテーション。下記 using 宣言が必要になる。
+
+	using System.ComponentModel.DataAnnotations;
+	using System.ComponentModel.DataAnnotations.Schema;
+
+下記のサンプルでは、`Id` を主キーに設定。カラム名を `id` に設定している。
+
+	namespace PracticeEntityFW.Models
+	{
+		using System.ComponentModel.DataAnnotations;
+		using System.ComponentModel.DataAnnotations.Schema;
+
+		public class Person
+		{
+			[Key] // ID などの名前のプロパティがあるときは自動で主キーに指定されるらしい。
+			[Required]
+			[Column("id")]
+			public int Id { get; set; }
+
+			public string Name { get; set; }
+		}
+	}
+	
+コンテキストを作成する。あまり理解してないけど、DB との橋渡し的な役割のクラス？  
+理解したら追記する。
+
+特に重要な部分は `OnConfiguring()` の中身。ここに SQLite のデータベース作成のコードを記述する。  
+
+SQLite 以外を使う場合は当然別のコードを書くことになると思われる。  
+因みに、`UseSqlite() `は `EntityFrameworkCore.Sqlite` を using しないと使えない拡張メソッドらしい。
+
+特筆するようなことでもないが、接続文字列に関しては、 `EFWTest.sqlite` の名称でDBファイルを生成しているだけ。
+	
+	namespace PracticeEntityFW.Models
+	{
+		using Microsoft.EntityFrameworkCore.Sqlite;
+		using Microsoft.EntityFrameworkCore;
+		using System.Data.SQLite;
+		using Microsoft.Data.Sqlite;
+
+		public class PersonDbContext : DbContext
+		{
+			public DbSet<Person> Persons { get; set; }
+
+			protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+			{
+				SQLiteConnection.CreateFile("EFWTest.db");
+				var connectionString = new SqliteConnectionStringBuilder { DataSource = @"EFWTest.sqlite" }.ToString();
+				optionsBuilder.UseSqlite(new SQLiteConnection(connectionString));
+			}
+		}
+	}
+
+最後に MainWindowViewModel のコンストラクタで DB ファイルを生成する。  
+正しく進んでいれば `Person` で指定したテーブル構造を持った DB ファイルが生成される。
+
+SQLite では必要ないかもしれないが、 EnsureCreated() は非同期版もあるっぽい。
+
+	namespace PracticeEntityFW.ViewModels
+	{
+		using PracticeEntityFW.Models;
+		using Prism.Mvvm;
+
+		public class MainWindowViewModel : BindableBase
+		{
+			public MainWindowViewModel()
+			{
+				using (var db = new PersonDbContext())
+				{
+					db.Database.EnsureCreated();
+				}
+			}
+		}
+	}
