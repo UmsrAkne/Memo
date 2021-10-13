@@ -87,3 +87,21 @@ SQLite では必要ないかもしれないが、 EnsureCreated() は非同期�
 			}
 		}
 	}
+
+# Insert
+
+導入が済んだので、次はデータの挿入を行う。データの操作は DbContext クラスを経由して行う。  
+具体的な記述は以下。
+
+	using (var db = new PersonDbContext())
+	{
+		db.Persons.Add(new Person() { Id = 10, Name = "名前" });
+		db.SaveChanges();
+	}
+
+上述で DbContext クラスに宣言したリストにデータを挿入する。  
+但し、`db.Persons.Add()` を実行した段階ではまだデータベースにデータは挿入されない。  
+`db.SaveChanges()` を実行した際に初めて変更が適用される。
+
+Add() されたオブジェクト、`db` に保持されることになる。  
+大量にオブジェクトを挿入する場合は、SaveChanges() をコールしてオブジェクトは破棄するといった対応が必要。
