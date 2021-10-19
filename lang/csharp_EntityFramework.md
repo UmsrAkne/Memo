@@ -51,6 +51,7 @@ SQLite 以外を使う場合は当然別のコードを書くことになると�
 		using Microsoft.EntityFrameworkCore.Sqlite;
 		using Microsoft.EntityFrameworkCore;
 		using System.Data.SQLite;
+		using System.IO;
 		using Microsoft.Data.Sqlite;
 
 		public class PersonDbContext : DbContext
@@ -59,7 +60,10 @@ SQLite 以外を使う場合は当然別のコードを書くことになると�
 
 			protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 			{
-				SQLiteConnection.CreateFile("EFWTest.db");
+				if(!File.Exists()){
+					SQLiteConnection.CreateFile("EFWTest.sqlite"); // ファイルが存在している場合は問答無用で上書き。
+				}
+
 				var connectionString = new SqliteConnectionStringBuilder { DataSource = @"EFWTest.sqlite" }.ToString();
 				optionsBuilder.UseSqlite(new SQLiteConnection(connectionString));
 			}
