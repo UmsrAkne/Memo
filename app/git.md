@@ -53,3 +53,15 @@ github から http で `git clone` した場合、`push` する際にユーザ�
 	#  (master>)> git push
 
 	// push できる
+	
+### ファイル名の大文字、小文字の変更を無視しない
+
+設定を確認する。
+
+	$ git config -l --local | grep core.ignorecase
+	core.ignorecase=true
+	
+ignorecase を false にセットすれば、大文字小文字の変更も検知される。  
+上記コードで再度確認も可能
+
+	$ git config core.ignorecase false
