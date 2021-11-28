@@ -74,3 +74,5 @@ ignorecase を false にセットすれば、大文字小文字の変更も検�
 	$ git rm aaa.* 
 
 `git status` を実行すると該当ファイルが `deleted` に変化。その変更をコミットでファイルが一つになる。
+
+上記やったらマージできなくなった。 `git mv -f oldName newName` をするべきだった？
