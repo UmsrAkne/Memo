@@ -146,3 +146,18 @@ Add() されたオブジェクトは `db` に保持されることになる。
 	{
 		var list = db.Persons.Where(p => p.Id == 11).ToList();
 	}
+
+## Update
+
+データの更新は、取り出したオブジェクトのプロパティを書き換える。  
+`SaveChanges` を実行しなければ変更が確定されないので注意。
+
+	using (var db = new PersonDbContext())
+	{
+		foreach (var p in db.Persons)
+		{
+			p.prop = xxx;
+		}
+		
+		SaveChanges();
+	}
