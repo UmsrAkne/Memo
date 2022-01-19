@@ -161,3 +161,13 @@ Add() されたオブジェクトは `db` に保持されることになる。
 		
 		SaveChanges();
 	}
+	
+## アノテーション
+
+	using System.ComponentModel.DataAnnotations;
+	[Key]				// 主キー
+	[Required]			// 付記されたプロパティを必須にする。NotNull
+	[Column("id")]		// カラム名は通常プロパティ名が採用されるが、自分で指定する際に使用する。
+	
+	using System.ComponentModel.DataAnnotations.Schema;
+	[NotMapped] // アノテーションが付記されたプロパティをデータベースが無視する。
