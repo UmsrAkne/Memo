@@ -262,3 +262,45 @@ MainWindow.xaml は Icon プロパティに値を入力
 
 テキストの入力に便利なテキストボックスだが、CaretIndex が依存関係プロパティではないためバインディングできない。  
 キャレットの位置を変更したい場合はコードビハインドかビヘイビアあたりを使って実装することになりそう。
+
+---
+
+## WPF アプリで別ウィンドウ
+
+設定ウィンドウとか、警告ダイアログとか、基本のウィンドウ以外のウィンドウを出す際のメモ。
+
+### 前提
+
+    Prism を導入済み
+
+### 必要なこと。概要
+
+    1.MainWindowViewModel のコンストラクタの引数に IDialogService を入力する。 (Prism.Service.Dialogs)
+    2.新規で表示したいウィンドウのファイルと、そのビューモデルを作成する。(ウィンドウではなくページで作る)
+    3.新規作成したビューモデルに IDialogAware を実装 (Prism.Service.Dialogs)
+    4.App.xaml.cs.RegisterType(IContaineRegsiter containerRegister) を書き換える。
+    5.MainWindowViewModel 上で、dialogService.ShowDialog() を実行する。
+
+### 詳細
+
+(1) MainWindowViewModel のコンストラクタを書き換える。  
+これによりプログラム実行時には、自動で `IDialogService` オブジェクトが渡されようになる。  
+それをフィールドとかに代入して保持しておく。これを(5)で使う。
+
+(2) が、ウィンドウではなくページなのは、ウィンドウの子としてウィンドウを持つことができないため。  
+できなくはなさそうだが、がんばってやる理由もないので、ページを使用する。
+
+(3) 普通に実装する。実装したメソッドはダイアログが開いた際に実行される。  
+デフォルトで未実装例外のスローが記載されている場合は注意。
+
+(4)
+
+    containerRegistry.RegisterDialog<WindowClass, WindowViewModelClass>();
+
+のような感じで追記する 。(3) をやっていない場合は型不一致になる。
+
+(5)
+
+    dialogService.ShowDialog(nameof(WindowClass), param, (IDialogResult result) => { });
+
+ViewModel 中のプロパティなりメソッドなりでこれを実行すれば晴れて新規ウィンドウが表示される。
