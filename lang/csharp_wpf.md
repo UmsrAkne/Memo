@@ -304,3 +304,8 @@ MainWindow.xaml は Icon プロパティに値を入力
     dialogService.ShowDialog(nameof(WindowClass), param, (IDialogResult result) => { });
 
 ViewModel 中のプロパティなりメソッドなりでこれを実行すれば晴れて新規ウィンドウが表示される。
+
+新規ウィンドウと情報をやり取りしたい場合は、(5) の ShowDialog() の第二引数を使用する。  
+param には IDialogParameter 型を入力する。これは、キーと任意のオブジェクトをセットで入力可能な Add() を備える。
+
+取り出したい場合は `IDialogParameter.GetValue<Type>` にキーを入力すれば良い。
