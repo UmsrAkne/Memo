@@ -162,6 +162,12 @@ Add() されたオブジェクトは `db` に保持されることになる。
 		SaveChanges();
 	}
 	
+
+## Delete
+
+データの削除は、データを格納しているリストの `DbSet` の `Remove(item)`, `RemoveAt(index)` を呼び出す。  
+まとめて削除する Range つきのメソッドも提供されている。`SaveChanges()` の呼び出しを忘れないように。
+
 ## アノテーション
 
 	using System.ComponentModel.DataAnnotations;
