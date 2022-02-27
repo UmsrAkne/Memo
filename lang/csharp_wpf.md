@@ -41,6 +41,32 @@ ContextMenu と Setter が離れているのが少し納得行かないが、目
 
 ---
 
+## コンテキストメニューからデータコンテキストにアクセス その2
+
+MainWindow.xaml
+
+    <ContextMenu x:Name="menu">
+        <MenuItem
+            Command="{Binding VMCommand}"
+            CommandParameter="{Binding SelectedItem, ElementName=listView}" />
+    </ContextMenu>
+
+MainWindow.xaml.cs
+
+        public MainWindow()
+        {
+            InitializeComponent();
+            NameScope.SetNameScope(menu, NameScope.GetNameScope(this));
+        }
+
+XAML側でコントロールの `x:Name` を設定し、xaml.cs で `NameScope.SetNameScope()` を呼び出す。  
+引数は xaml で設定したコントロールの名前を使用する。  
+これにより、ビューモデルや他のビューをコンテキストメニューから参照できるようになる。  
+
+強烈なおまじない感が漂う。コンテキストメニューがビジュアルツリーから独立してるのって一体誰得なのか。
+
+---
+
 ## 一つのウィンドウを分割表示する
 tag WPF, XAML, GridSplitter, 分割
 
