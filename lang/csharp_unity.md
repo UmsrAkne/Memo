@@ -28,6 +28,49 @@ Unity プロジェクトの `Resources` フォルダに入っているファイ�
 行儀は良くない。というか、コードを実装した人間でないとこのソフトは使えない（当然）。  
 一般公開するソフトには使えないことに注意。
 
+## 外部のファイルを読み込む（画像編）
+
+参考ってかコピペ 
+ソース : http://kainoshizuku.blog.fc2.com/blog-entry-51.html?sp 
+
+コピペ元に感謝。
+
+	using UnityEngine;
+	using System.IO;
+
+	public class ImageLoader : MonoBehaviour
+	{
+		private SpriteRenderer sr;
+
+		void Start()
+		{
+			gameObject.AddComponent<SpriteRenderer>();
+			sr = gameObject.GetComponent<SpriteRenderer>();
+			Texture2D texture = ReadTexture(Directory.GetCurrentDirectory() + @"\graphics\image001.png", 1280, 720);
+			Sprite createdSprite = Sprite.Create(texture, new Rect(0, 0, 1280, 720), new Vector2(0, 0), 72);
+			sr.sprite = createdSprite;
+			sr.transform.position = new Vector3(-9, -5);
+		}
+
+		private Texture2D ReadTexture(string path, int width, int height)
+		{
+			byte[] bytes = File.ReadAllBytes(path);
+			Texture2D texture = new Texture2D(width, height);
+			texture.LoadImage(bytes);
+			texture.filterMode = FilterMode.Point;
+			return texture;
+		}
+
+		void Update() {}
+	}
+
+多少弄って動作するようにしている。  
+詳細はわからないが、いつもお世話になっている `System.Drawing.Image` は使えなかった。  
+外部にある画像を読み込むには、画像ファイルのバイト配列が必要になるらしい。  
+`System.IO.File.ReadAllBytes` にパスを入力することでロード。こっちは問題なく使える。
+
+また、このスクリプトをアタッチしたオブジェクト単体で使えるように `SptreRenderer` を追加している。
+
 ## 差分を含めた画像の表示
 
 ある画像の上に差分となる画像を重ねて表示する。  
