@@ -166,3 +166,45 @@ Unity プロジェクトの `Resources` フォルダに入っているファイ�
 これをシーンに登録されているゲームオブジェクトにアタッチして使用する。  
 画像の読み込みは Resources から行っている。  
 画像の下地は `SampleImage001`特に重要なのは `Draw()` 内の処理。
+
+## Assembly Definition
+
+Unity 画面のコンテキストメニューの `Create` から選択することで生成可能。コンパイルの際にアセンブリを分割することができる。  
+これを定義すると、VS のソリューションエクスプローラー上では .dll が分割されて表示されるようになる。  
+
+メリット等は不明。必要に迫られて使用したので、それに関してのメモ。  
+
+1. `Assets/Scenes/scripts` 内に格納さているスクリプトファイルをテストすることにした。
+2. `Assets/Tests/` フォルダを作成し、テストスクリプトをそこに設置したかった
+
+	要するにテストと被テストスクリプトを同じフォルダに置きたくない
+
+3. このとき、テストのファイルから被テストスクリプト（というか `Assets/Scenes/` のスクリプト全部が参照できない）
+
+### どうすれば良いか？
+
+結論 : Assembly Definition ファイルが必要。解決方法は以下。上記の状況をそのまま前提にする。
+
+1. `Assets/Scenes/scripts` （テスト対象が置かれているディレクトリ）に Assembly Definition ファイルを作成する。  
+
+	作成方法はコンテキストメニュー -> Create -> Assembly Definition  
+	Assembly Definition Reference なる項目もあるがこっちではない。少なくとも今回はこっちではなかった。
+
+2. `Assets/Tests/` フォルダにも Assembly Definition ファイルを作成する。
+
+	こっちのファイルは手動で作成した場合は手を加える必要がある。
+
+	`Define Constraints` -> UNITY_INCLUDE_TESTS  
+
+	- Assembly Definition Reference
+		- UnityEngine.TestRunner
+		- UnityEditor.TestRunner
+		- 1 で作成した Assembly Definition ファイルを追加する。
+
+	`Assembly Reference` -> nunit.framework.dll
+
+	少なくともこのあたりの設定が必要な模様。  
+
+Unity のメニューから Window -> General -> Test Runner からテスト用の asmdef を生成できるのでそっちを使うべきか。　
+
+これでテストスクリプトから被テストスクリプトを参照できるようになる。面倒。
