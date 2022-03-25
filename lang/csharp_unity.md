@@ -47,7 +47,10 @@ Unity プロジェクトの `Resources` フォルダに入っているファイ�
 			gameObject.AddComponent<SpriteRenderer>();
 			sr = gameObject.GetComponent<SpriteRenderer>();
 			Texture2D texture = ReadTexture(Directory.GetCurrentDirectory() + @"\graphics\image001.png", 1280, 720);
-			Sprite createdSprite = Sprite.Create(texture, new Rect(0, 0, 1280, 720), new Vector2(0, 0), 72);
+			
+			// Sprite.Create() の第三引数の Vector2 は 0,0 で入力した場合、
+			// 画像の位置が右上に画像サイズの半分だけずれる。 (0.5f, 0.5f) を推奨
+			Sprite createdSprite = Sprite.Create(texture, new Rect(0, 0, 1280, 720), new Vector2(0.5f, 0.5f), 72);
 			sr.sprite = createdSprite;
 			sr.transform.position = new Vector3(-9, -5);
 		}
