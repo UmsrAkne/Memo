@@ -11,6 +11,7 @@ DB をいい感じに利用できるようにする EntityFramework を使用す
 
 	Microsoft.EntityFrameworkCore 
 	Microsoft.EntityFrameworkCore.Sqlite
+	System.Data.Sqlite
 
 テーブルとして作成するデータを定義する。
 プロパティの上部についている `[Key]` などの文字列はアノテーション。下記 using 宣言が必要になる。
