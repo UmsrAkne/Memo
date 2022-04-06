@@ -178,3 +178,39 @@ Add() されたオブジェクトは `db` に保持されることになる。
 	
 	using System.ComponentModel.DataAnnotations.Schema;
 	[NotMapped] // アノテーションが付記されたプロパティをデータベースが無視する。
+
+## Inmemory DB の使用
+
+どうにかして DBContext クラスのテストをやろうとした結果、InmemoryDB ならテストが行えそうな気がした。
+
+DBContext を継承したクラスに以下のようなコンストラクタと DbSet を定義する。  
+OnCofiguring は後ほどの説明のために記述に含める。
+
+    public class TextDBContext : DbContext
+    {
+        public TextDBContext(DbContextOptions<TextDBContext> options) : base(options)
+        {
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+        }
+    }
+
+テストプロジェクトの方には以下のようなコードを記述する。  
+
+`DbContextOptionBuilder<T>` 使用するためには `Microsoft.EntityFrameworkCore` パッケージの導入が必要。  
+また、`UseInMemoryDatabase(arg)` を使用するためには、`Microsoft.EntityFrameworkCore.Inmemory` の導入が必要。
+
+	[TestMethod()]
+	public void AddTitleTest()
+	{
+		var option = new DbContextOptionsBuilder<TextDBContext>()
+		.UseInMemoryDatabase(databaseName: "MyMemDb")
+		.Options;
+
+		var db = new TextDBContext(option);
+		db.Database.EnsureCreated();
+	}
+
+テストで `EnsureCreated()` を実行した際、`OnConfiguring(arg)` が実行されるが、ここに DB ファイルの生成コードが記述されている場合、テストの実行に失敗する……。
