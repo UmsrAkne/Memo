@@ -1,5 +1,9 @@
 # Photoshop で使えるスクリプト
 
+## Photoshop のスクリプトが格納されている場所
+
+	C/Program Files/Adobe/Adobe Photoshop/Presets/Scripts
+
 ## saveAsPng
 
 レイヤーを一枚ずつ非表示にしながら画像を出力するスクリプト
