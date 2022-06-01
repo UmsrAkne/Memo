@@ -18,3 +18,9 @@ FormatTime の仕様は以下
 * `OutputVar` で変数に格納
 * `TimeStamp` は必要無さそうなので把握してない
 * `Format` で出力形式を設定する。yyyyMMdd_HHmmss -> 20210721_002535 という具合。
+
+## スクリプトのリロード
+
+	#z::Reload
+
+スクリプトをリロード。編集中は必須。上記は `Win + z` で発動。
