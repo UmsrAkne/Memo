@@ -211,3 +211,10 @@ Unity 画面のコンテキストメニューの `Create` から選択するこ�
 Unity のメニューから Window -> General -> Test Runner からテスト用の asmdef を生成できるのでそっちを使うべきか。　
 
 これでテストスクリプトから被テストスクリプトを参照できるようになる。面倒。
+
+## コマンドライン引数
+
+起動時のウィンドウサイズを指定することができる。
+
+	# startUnity.sh
+	./text.exe -screen-width 1280 -screen-height 720 
