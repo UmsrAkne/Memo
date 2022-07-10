@@ -48,7 +48,7 @@
 
 ### 他のコマンドと組み合わせて使用した例
 
-	find -name "*.txt" | grep -e '[0-9]' | xargs -I {} mv {}suffix
+	find -name "*.txt" | grep -e '[0-9]' | xargs -I{} mv {} {}suffix
 
 以下説明
 
