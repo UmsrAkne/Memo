@@ -93,3 +93,13 @@ ID が確認できたら、変更を適用するブランチに移動する。�
 注意点として、変更がステージングされたりするわけではないこと。  
 cherry-pick を実行した時点で**チェックアウトしているブランチにコミットが追加される。**  
 当然、main とかで行うと、直接コミットしてしまうことになる。（というかやった）
+
+## git commit のエディタを設定する
+
+`git config --global core.editor "C:/PROGRA~2/Vim/vim82/gvim.exe"`
+
+`core.editor` が既に設定されている場合は、引数で上書きであることを明示する。
+
+`git config --global --replace-all core.editor "C:/PROGRA~2/Vim/vim82/gvim.exe"`
+
+自分の環境では基本ないけど、 `vim` にパスが通っている場合はフルパスで指定する必要はもちろんない。
