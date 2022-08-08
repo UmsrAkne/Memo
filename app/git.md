@@ -103,3 +103,14 @@ cherry-pick を実行した時点で**チェックアウトしているブラン
 `git config --global --replace-all core.editor "C:/PROGRA~2/Vim/vim82/gvim.exe"`
 
 自分の環境では基本ないけど、 `vim` にパスが通っている場合はフルパスで指定する必要はもちろんない。
+
+## エラーとか
+
+	Warning: Permanently added the RSA host key for IP address 'xxx.xxx.xxx.xxx' to the list of known hosts.
+
+しばらくアクセスしていなかったリポジトリから pull とかした時に表示された。
+エラーは表示されるが、それによって操作が行えない等の弊害は無い様子。
+
+	ssh-keygen -R xxx.xxx.xxx.xxx
+
+コマンドで対処できるらしい。時間がないので未検証。
