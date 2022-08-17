@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>public DelegateCommand simple generic</Title>
+      <Shortcut>dgc</Shortcut>
+      <Description></Description>
+      <Author></Author>
+    </Header>
+    <Snippet>
+      <Declarations>
+		<Literal>
+			<ID>value</ID>
+			<Default>value_name</Default>>
+		</Literal>
+
+		<Literal>
+			<ID>type</ID>
+			<Default>object</Default>>
+		</Literal>
+
+		<Literal>
+			<ID>param</ID>
+			<Default>param</Default>>
+		</Literal>
+
+      </Declarations>
+      <Code Language="csharp"><![CDATA[public DelegateCommand<$type$> $value$ => new DelegateCommand<$type$>(($param$) =>
+		 {
+		 	 $end$
+		 });]]></Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

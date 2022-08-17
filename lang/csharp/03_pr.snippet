@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>Bindable Property</Title>
+      <Shortcut>pr</Shortcut>
+      <Description>Bindable Property</Description>
+      <Author></Author>
+    </Header>
+    <Snippet>
+      <Declarations>
+
+        <Literal>
+          <ID>type</ID>
+          <ToolTip>Property type</ToolTip>
+          <Default>object</Default>
+        </Literal>
+
+        <Literal>
+          <ID>valueName</ID>
+          <ToolTip>Field name</ToolTip>
+          <Default>valueName</Default>
+        </Literal>
+
+        <Literal>
+          <ID>ValueName</ID>
+          <ToolTip>Property name</ToolTip>
+          <Default>ValueName</Default>
+        </Literal>
+
+      </Declarations>
+      <Code Language="csharp">
+        <![CDATA[private $type$ $valueName$;
+          public $type$ $valueName$ {get => $valueName$; set => SetProperty(ref $valueName$,value); }$end$]]> </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>
