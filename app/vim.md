@@ -138,6 +138,17 @@ fileencoding={encoding} はファイルの文字コードを指定したコー�
 	:set fileformat?
 	:set ff?
 
+	# 結果は以下のフォーマットで表示される。それぞれ右の改行コードに対応する
+
+	fileformat=unix 	# LF
+	fileformat=dos 		# CRLF
+	fileformat=mac 		# CR
+
+## ファイルの改行コードを表示する
+
+	:set list		# 表示
+	:set nolist		# 非表示
+
 ## ファイルの改行コードを変更する
 
 	:set fileformat=dos
