@@ -154,6 +154,14 @@ fileencoding={encoding} はファイルの文字コードを指定したコー�
 	:set fileformat=dos
 	:set ff=unix
 
+	# 下記右の記号が改行コードとして表示される。
+	
+	# CR		\n		$
+	# CRLF		\r\n	^M$
+	# CR		\r		^M
+
+`Windows` の `gVim` では `CRLF` は `$` で表示されてしまっているみたい。要検証。
+
 指定できる改行コードは dos(CRLF), unix(LF), mac(CR) のいずれか。  
 改行コードをセットしたらファイルは変更される。
 
