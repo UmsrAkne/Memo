@@ -35,7 +35,7 @@
 
 ### 特定行の表示
 
-    sed -n '2p' [fileName]      # 2行目を表示
+    $ sed -n '2p' [fileName]      # 2行目を表示
 
 
 ### その他
