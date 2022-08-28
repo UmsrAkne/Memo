@@ -74,3 +74,23 @@
 
     http://localhost:8080
     # It works! が表示され、 Apatch が動作中なのを確認することができる。
+
+## コンテナにファイルをコピーする
+
+端末はユーザールートで実行している。
+
+    $ docker container cp testfile.txt myContainer:/usr/local/apache2/htdocs/
+
+ここでの `cp` は `docker container` のサブコマンドなので、`bash` 等の `cp` とは別だと考えた方が良さそう。  
+コピーはできたが、ファイル一覧の取得等の方法は次項。
+
+## コンテナ内でシェルを実行する
+
+    $ winpty docker exec -it [Container] bash
+
+コンテナの中でシェルを実行、操作できる。`Apatch` のコンテナでやってみたところ普通に動いた。
+
+因みに winpty を付けないと下記が表示される
+
+    the input device is not a TTY.  If you are using mintty, try prefixing the command with 'winpty'
+    # つけろとのことなので素直に付けておこう。
