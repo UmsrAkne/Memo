@@ -214,3 +214,55 @@ OnCofiguring は後ほどの説明のために記述に含める。
 	}
 
 テストで `EnsureCreated()` を実行した際、`OnConfiguring(arg)` が実行されるが、ここに DB ファイルの生成コードが記述されている場合、テストの実行に失敗する……。
+
+## EF で PostgreSQL を使う
+
+`Nuget` でインストールするパッケージ
+
+	Microsoft.EntityFrameworkCore
+	Npgsql.EntityFrameworkCore.PostgreSQL
+
+DB のレコードを表すクラスを作成
+
+	using System.ComponentModel.DataAnnotations;
+
+	public class Comment
+	{
+		[Key]
+		[Required]
+		public int Id { get; set; }
+
+		public string Text { get; set; }
+	}
+
+DBコンテキストクラスを作成する。以下の `using` が必要となる。  
+接続に必要な情報は `OnConfiguring` の中に記述する。
+
+    using Microsoft.EntityFrameworkCore;
+    using Npgsql;
+
+    public class CommentDbContext : DbContext
+    {
+        public DbSet<Comment> Comments { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            NpgsqlConnectionStringBuilder builder = new NpgsqlConnectionStringBuilder();
+
+            builder.Port = 5433;
+            builder.Username = "postgres";
+            builder.Password = "passw0rd";
+            builder.Host = "localhost";
+            builder.Database = "testdb";
+
+            optionsBuilder.UseNpgsql(builder.ToString());
+        }
+    }
+
+任意の場所でコンテキストクラスを `new` して `EnsureCreated()` を呼び出す。
+
+	public MainWindowViewModel()
+	{
+		var context = new CommentDbContext();
+		context.Database.EnsureCreated();
+	}
