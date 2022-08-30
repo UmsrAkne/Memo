@@ -58,8 +58,8 @@ Docker の上の Postgresql を構築し、`Windows` からアクセスする。
 ## コンテナを作成
 
     $ docker-compose up -d
+    # 理解が完全ではないけど -d をつけないと正常に動かないらしい
     # コンテナが作成される。すごい。
-
 
 ## コンテナにログイン
 
@@ -87,3 +87,18 @@ Docker の上の Postgresql を構築し、`Windows` からアクセスする。
 コンテナ内に接続するのにも `localhost` でOK
 
 パスワードの入力を求められるので、`docker-compose.yml` で指定したパスを入力。
+
+## 使い終わったら
+
+DB のデータを残しておきたい場合
+
+    $ docker container stop postgres
+    # 今回のサンプルではコンテナ名は postgres
+
+DB のデータを残したくない場合
+
+    $ docker-compose down -v 
+    # down は up で起動したコンテナの停止と削除を行う
+    # -v は関連付けられているボリュームを一緒に削除する
+
+次に使いたい場合は再度 `docker-compose up -d` を実行すれば良い。  
