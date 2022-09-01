@@ -266,3 +266,17 @@ DBコンテキストクラスを作成する。以下の `using` が必要とな
 		var context = new CommentDbContext();
 		context.Database.EnsureCreated();
 	}
+
+### DateTime が使えない問題
+
+いくつか対策があるようだが、ひとまずメモしておく。
+
+`DbContext` のコンストラクタに以下の処理を記述する。
+
+	System.AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
+`System.AppContext` に関して
+
+	アプリケーションのコンテキストについてのデータを設定したり取得したりするためのメンバーを提供します。
+
+よくわからない。アプリのコアな部分の設定とか切り替えるクラスなのかな？
