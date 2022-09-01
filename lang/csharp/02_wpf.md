@@ -355,3 +355,49 @@ icon ファイルの作成は専用のソフトを使えば良い。ググれば
 断じて **ペイントで `.bmp` を作って、拡張子を `.ico` に変更する。** 等というデタラメな方法では無いので注意する。
 
 ネットで検索するとアイコンファイルの作り方として出てくる。まずファイルのフォーマット違うから……。本当にやめて……。
+
+## ビューモデルからフォーカスを設定する
+
+`FocusExtension.cs` を任意の場所に作成
+
+    using System.Windows;
+
+    public static class FocusExtension
+    {
+        public static readonly DependencyProperty IsFocusedProperty =
+                DependencyProperty.RegisterAttached(
+                   "IsFocused", typeof(bool), typeof(FocusExtension), new UIPropertyMetadata(false, OnIsFocusedPropertyChanged));
+
+        public static bool GetIsFocused(DependencyObject obj)
+        {
+            return (bool)obj.GetValue(IsFocusedProperty);
+        }
+
+        public static void SetIsFocused(DependencyObject obj, bool value)
+        {
+            obj.SetValue(IsFocusedProperty, value);
+        }
+
+        private static void OnIsFocusedPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var uie = (UIElement)d;
+            if ((bool)e.NewValue)
+            {
+                uie.Focus();
+            }
+        }
+    }
+
+フォーカスをセットしたいコントロールに設定。  
+ビューモデルのプロパティとバインディング。
+
+    xmlns:m="clr-namespace:xxx.Models"
+    <TextBox m:FocusExtension.IsFocused="{Binding IsTextBoxFocused}" />
+
+これにより、ビューモデルの `IsTextBoxFocused` を `true` にセットするとフォーカスが映る。  
+二度目移行のセットに関しては、値が元から `true` だった場合、フォーカスが移らないため、
+
+    IsTextBoxFocused = false;
+    IsTextBoxFocused = true;
+
+のようにすると良い。
