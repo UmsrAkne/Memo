@@ -280,3 +280,26 @@ DBコンテキストクラスを作成する。以下の `using` が必要とな
 	アプリケーションのコンテキストについてのデータを設定したり取得したりするためのメンバーを提供します。
 
 よくわからない。アプリのコアな部分の設定とか切り替えるクラスなのかな？
+
+## 接続失敗後に再接続できない
+
+`ConnectionStringBuilder` 等で接続を試行した際、その後同じ `DbContext` インスタンスを使用して再接続できなかった。
+
+`DbContext.Database.EnsureCreated()` の初回実行時に以下のメソッドが実行される。
+
+	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+	{
+		optionsBuilder.UseNpgsql(ConnectionStringBuilder.ToString());
+	}
+
+一回目の実行で `ConnectionStruiBuilder` に不正な内容が含まれていた場合、当然接続に失敗する。ここまでは良い。  
+しかし、再度正しい接続情報を `ConnectionStruiBuilder` に入力し、`optionBuilder.UserNpgsql` を実行しても接続できなかった。
+
+* `EnsureCreated()`
+* `OnConfiguring()`
+* `UseNpgsql()`
+
+いずれのメソッドを実行してみても再接続はできなかった。  
+今回は `DbContext` をシングルトンで運用していたため、できれば再生成は避けたかったのだが。
+
+`DbContext` インスタンスを生成し直して最初から設定をやり直せば問題はないけど、何かやり方が間違っていた？
