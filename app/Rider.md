@@ -62,3 +62,19 @@ Xaml を自動でフォーマットしてくれる。VS と同名のプラグイ
 どうやら英語キーボードではバッククォートを単体入力できるという豆知識を得た。
 
 駄目じゃん……。
+
+## プロジェクトのバージョン設定
+
+VS ではプロジェクトのプロパティから設定できるが、`Rider` では見つからない。  
+ファイルを直接編集することで対応可能。
+
+    ProjectName/Properties/AssemblyInfo.cs
+
+上記ファイルを編集する。
+
+    [assembly: AssemblyFileVersion("1.0.0.0")] // この部分を編集
+
+保存すればそのまま反映される。  
+因みに上記を取得するためのコードは以下の通り。
+
+    FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).FileVersion;
