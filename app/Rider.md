@@ -78,3 +78,17 @@ VS ではプロジェクトのプロパティから設定できるが、`Rider` 
 因みに上記を取得するためのコードは以下の通り。
 
     FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).FileVersion;
+
+## Vim のコマンドライン上で日本が文字化けする
+
+日本語を扱えるフォントを設定する。
+
+    Setting -> Editor -> ColorScheme -> Fallback font 
+
+こちらは一応設定したが恐らく無関係な項目。
+
+    Setting -> Editor -> Font -> Typograpy Settings -> Fallback font 
+
+`Typograpy`って何？　 両方変更したら文字化けしなくなったので記録しておく。
+
+尚、コンソールの方は同じ設定を用いても相変わらず文字化けした。
