@@ -56,11 +56,12 @@ Source にパスをバインドすれば、パスの変化に合わせて画像�
 ## WPF, XAML でインテリセンス
 
 既存の `Window` 要素に下記の属性を追記する。  
-`xmlns:local` , `ViewModel` に関しては適宜プロジェクトに合わせて名前を修正する。
+`xmlns:viewModels` , `ViewModel`, `projectName` に関しては適宜プロジェクトに合わせて名前を修正する。
 
-	<Window xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	<Window 
+			xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-			xmlns:local="clr-namespace:WpfTest"
 			mc:Ignorable="d"
-			d:DataContext="{d:DesignInstance local:ViewModel}"
+			xmlns:viewModels="clr-namespace:projectName.ViewModels"
+			d:DataContext="{d:DesignInstance viewModels:MainWindowViewModel}"
 			/>
