@@ -65,3 +65,11 @@ Source にパスをバインドすれば、パスの変化に合わせて画像�
 			xmlns:viewModels="clr-namespace:projectName.ViewModels"
 			d:DataContext="{d:DesignInstance viewModels:MainWindowViewModel}"
 			/>
+
+## 型に対して適用したスタイルを継承する
+
+Style をキー無しで宣言した場合、型に対してデフォルトでセッターを適用できる。  
+この状態のスタイルを継承するには以下のようにする。
+
+	<Style BasedOn="{StaticResource {x:Type TextBox}}" TargetType="TextBox" />
+	<!-- 型が TextBox の場合 -->
