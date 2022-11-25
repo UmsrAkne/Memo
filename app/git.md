@@ -114,3 +114,28 @@ cherry-pick を実行した時点で**チェックアウトしているブラン
 	ssh-keygen -R xxx.xxx.xxx.xxx
 
 コマンドで対処できるらしい。時間がないので未検証。
+
+## 削除したファイルを復活させる
+
+以下を使用する。
+
+	git checkout filePath
+
+以下実証。※コマンド入力行以外はフォーマットしてある。
+
+	# git に file.txt が登録されている状態。現在は変更無し
+	~/Desktop/gitTest  (main)> git status
+		nothing to commit, working tree clean
+
+	# file.txt を削除する
+	~/Desktop/gitTest  (main)> rm file.txt
+	~/Desktop/gitTest  (main *)> git status
+		(use "git restore <file>..." to discard changes in working directory)
+				deleted:    file.txt
+
+	# 削除したファイルを復元する
+	~/Desktop/gitTest  (main *)> git checkout file.txt
+		Updated 1 path from the index
+
+	~/Desktop/gitTest  (main)> git status
+		nothing to commit, working tree clean
