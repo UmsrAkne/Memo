@@ -139,3 +139,50 @@ cherry-pick を実行した時点で**チェックアウトしているブラン
 
 	~/Desktop/gitTest  (main)> git status
 		nothing to commit, working tree clean
+
+## ブランチを別のコミットにつける
+
+根本を付け替えるブランチにチェックアウトして以下を実行する。
+
+	git rebase 根本に指定するコミットハッシュ
+
+または
+
+	# こちらで指定する場合はブランチの先頭に付け替えか？
+	git rebase 根本となるブランチ名
+
+以下検証。
+
+	# 現在 main の Commit2 から branch1 が生えている
+	# branch1 には２つのコミット　Commit2, COmmit3 がある。
+	~/Desktop/gitTest  (branch1)> git log --oneline --graph
+	* b0cbf2e (HEAD -> branch1) Commit 3 (branch1)
+	* f73d0f8 Commit 2 (branch1)
+	* c97e539 (main) Commit 1
+	* 6b37170 init
+
+	# main には Commit1 の後に既に Commit4 が存在する。
+	~/Desktop/gitTest  (main)> git log --oneline --graph
+	* d1ae886 (HEAD -> main) Commit 4 (main)
+	* c97e539 Commit 1
+	* 6b37170 init
+
+	~/Desktop/gitTest  (main)> git checkout branch1
+	Switched to branch 'branch1'
+
+	# branch1 にチェックアウトした状態でリベース
+	# リベース先にコミットハッシュを指定する
+	~/Desktop/gitTest  (branch1)> git rebase d1ae886
+	Successfully rebased and updated refs/heads/branch1.
+
+	# git log を叩くと branch1 の根本が Commit1 から Commit4 になっていることがわかる。
+	~/Desktop/gitTest  (branch1)> git log --oneline --graph
+	* 50b7b20 (HEAD -> branch1) Commit 3 (branch1)
+	* 7c3e717 Commit 2 (branch1)
+	* d1ae886 (main) Commit 4 (main)
+	* c97e539 Commit 1
+	* 6b37170 init
+
+### 備考
+
+Rebase でブランチを付け替えた場合、ブランチ内のコミットは全て新規のものに置き換わるので頭に入れておく。
