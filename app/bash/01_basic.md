@@ -27,4 +27,21 @@
 |  enter   |         選択中のコマンドを実行する         |
 | ctrl + r |                 履歴を遡る                 |
 | ctrl + s |                履歴を進める                |
-# Linux bash コマンドに関するメモ
+
+## 設定ファイル
+
+`.bash_profile` と `.bashrc` の２種類がある。
+
+どちらも設定フィルだが、`.bash_profile` はログインシェル起動時にのみ読み込まれ、
+`.bashrc` は全シェル起動時に読み込まれるようだ。
+
+`.bash_profile` に `.bashrc` を起動するコマンドを書いて使用したりするみたい。
+
+Windows で使っている限りでは `.bash_profile` -> `.bashrc` の順で実行されると考えれば良いか。
+
+## プロンプト表示の変更
+
+`.bash_profile` or `.bashrc` に記述する。以下はサンプル
+
+    # 時刻表示 フルパス gitのステータス > 
+    export PS1='\e[33m\t \[\033[33m\]\w\[\033[36m\]`__git_ps1`\[\033[0m\] > '
