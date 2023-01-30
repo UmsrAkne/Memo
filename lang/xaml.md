@@ -27,6 +27,29 @@ Trigger は少なくとも２種類ある。
 
 `DataTrigger` の書式は `Binding="{Binding targetProperty}" っていう回りくどい書式になっているので注意
 
+## Behavior, EventTrigger
+
+Event 発生に対して処理をしたい場合は `Behavior` や `EventTrigger` が使える。
+
+`Behavior` ではイベントハンドラを、`EventTrigger` ではコマンドをそれぞれ実行することができる。
+
+	<Window
+		xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+		... >
+		<-- namespace i を宣言 -->
+
+		<-- Behavior-->
+		<i:Interaction.Behaviors>
+			<m:TextInputLimitBehavior />
+		</i:Interaction.Behaviors>
+
+		<-- Trigger-->
+		<i:Interaction.Triggers>
+			<i:EventTrigger EventName="SelectionChanged">
+				<i:InvokeCommandAction Command="{Binding Command}" />
+			</i:EventTrigger>
+		</i:Interaction.Triggers>
+
 ## Image コントロール
 
 画像を表示するためのコントロール。Source に画像ファイルのフルパスを入力することで利用できる。  
