@@ -46,6 +46,29 @@
 
 コマンドが中括弧だから検索も上手くできず情報が集まらない。何か設定があるのか？
 
+### .ideavimrc
+
+設定ファイル `.ideavimrc` をユーザールートに作成することである程度の設定を行うことができる。
+
+一度コマンドラインから `:source ~/.ideavimrc` で読み込みを行ったが、多分やらなくても読み込んでくれる。
+
+    " ニーモニックマークの登録ウィンドウを表示
+    nnoremap m :action ToggleBookmarkWithMnemonic<CR>
+
+    " ニーモニックマーク一覧ウィンドウを表示
+    nnoremap ` :action ShowBookmarks<CR>
+
+独自の機能として、`:action` が存在する。
+
+`Rider` 他、Jetbrains のIDE の機能を呼び出すことができる。  
+`ideavim` のキー操作に IDE の機能をマッピング可能。
+
+上記では、ニーモニックマークの操作を vim のマーク操作キーに割り当てている。  
+`<CR>` は `Enter` (確定) を表している。
+
+使用可能なアクションはコマンドラインにて `:actionlist` で一覧を出すことが出来る。  
+`:actionlist searchPattern` 等とすると、部分一致検索でリスティングすることも出来る。
+
 ## Xaml Styler
 
 Xaml を自動でフォーマットしてくれる。VS と同名のプラグインが Rider にも用意されている。  
