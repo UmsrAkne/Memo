@@ -38,6 +38,23 @@ C# のリストに対する操作を行う機能。実態は拡張メソッド�
 
 更にループをネストして `foreach(var tag in tagGroup)` とすると、`Key` 毎に分類された `tag` にアクセスすることができる。
 
+### DbSet<T>.GroupBy()
+
+`EntityFramework` の DbSet.GroupBy をコールすると例外が出た。バージョンが古いせいか？  
+メッセージを見るに、サポートしていない。らしい？  
+このケースで使いたい場合は、一度 `ToList()` でリストを確定することで呼び出せる。
+
+パフォーマンス上、不要であれば `ToList()` とか途中で使わない方が良いとは思うけど仕方ない。
+
+    // 問題があったコード
+    // EntityFrameworkCore のバージョンは 3.1.32 を使用
+    public IEnumerable<History> GetHistories()
+    {
+        // 間に ToList() が入っているのは、DbSet.GroupBy を実行すると例外がスローされるため
+        var paths = Histories.Where(h => true).ToList().GroupBy(h => h.Path);
+        return paths.Select(hs => hs.OrderByDescending(h => h.DateTime).First());
+    }
+
 ## Join
 
 要するに内部結合
