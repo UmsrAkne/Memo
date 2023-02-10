@@ -96,3 +96,11 @@ Style をキー無しで宣言した場合、型に対してデフォルトで�
 
 	<Style BasedOn="{StaticResource {x:Type TextBox}}" TargetType="TextBox" />
 	<!-- 型が TextBox の場合 -->
+
+## 基本型をリソースで定義する
+
+	<!-- トップレベルにて xmlns を宣言する -->
+	xmlns:system="clr-namespace:System;assembly=System.Runtime"
+
+	<!-- Double を使った例>
+	<system:Double x:Key="DateTimeColumnWidth">110.0</system:Double>
