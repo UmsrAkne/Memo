@@ -64,3 +64,22 @@ NAudio を使用して mp3 ファイルを複数同時に再生する。
 再生されなかった際、一行ずつステップインしたところ、`waveOut.Init(reader)` の行で処理が終了していた。(続く Play() は実行されなかった)
 
 終了の際、アプリが落ちるわけでもなく、例外も出なかった。わからん。
+
+# NAudio を使用して PC の音量を操作する
+
+再生しているファイルの音量ではなく、システムそのものの音量を変更できる。
+
+`NAudio.CoreAudioApi` は NAudio を `Nuget` から導入すれば利用することができる。  
+`MasterVolumeLevelScalar` には `get, set` の両方が実装されている。
+
+	using NAudio.CoreAudioApi;
+
+	private void SetVolume(int value)
+	{
+		MMDeviceEnumerator devEnum = new();
+		MMDevice device = devEnum.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
+		device.AudioEndpointVolume.MasterVolumeLevelScalar = value / 100.0f;
+	}
+
+Enumerator とあるので、多分アプリ別の音量出力の設定もできるかもしれない。  
+今回はマスターボリュームだけ設定できれば良かったので未検証。
