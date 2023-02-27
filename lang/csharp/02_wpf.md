@@ -401,3 +401,30 @@ icon ファイルの作成は専用のソフトを使えば良い。ググれば
     IsTextBoxFocused = true;
 
 のようにすると良い。
+
+## ウィンドウを操作する
+
+    // System.Windows.Application を使用する
+    using System.Windows;
+
+    // 型は double を使用
+    double value;
+
+    // 幅と高さ
+    Application.Current.MainWindow.Width = value;
+    Application.Current.MainWindow.Height = value;
+
+    // 左端と上端の設定 ウィンドウの座標 (X, Y) を設定する
+    Application.Current.MainWindow.Left = value;
+    Application.Current.MainWindow.Top = value;
+
+MainWindow.WindowState に値を代入することでウィンドウの状態を操作できる。  
+`Minimized` 以外は今回使っていないので、そちらの動作は未確認
+
+    // ウィンドウを最小化
+    Application.Current.MainWindow.WindowState = WindowState.Minimized;
+
+    // WindowState には以下の値が定義されている。
+    // WindowState.Maximized
+    // WindowState.Minimized
+    // WindowState.Normal
