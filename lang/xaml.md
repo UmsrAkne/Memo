@@ -89,6 +89,18 @@ Source にパスをバインドすれば、パスの変化に合わせて画像�
 			d:DataContext="{d:DesignInstance viewModels:MainWindowViewModel}"
 			/>
 
+また、`ControlTemplate` 配下でも通常インテリセンスは有効にならない。  
+しかし、以下のように `Window` と同様に記述することで、型を指定し、インテリセンスを使うことができる。
+
+型名を修飾する名前空間の宣言は省いてあるので、必要に応じて追加する。
+
+	<ControlTemplate
+		d:DataContext="{d:DesignInstance models:Folder}"
+		mc:Ignorable="d"
+		>
+
+`DataTemplate` の場合は `DataType` プロパティを使用すれば良い。
+
 ## 型に対して適用したスタイルを継承する
 
 Style をキー無しで宣言した場合、型に対してデフォルトでセッターを適用できる。  
