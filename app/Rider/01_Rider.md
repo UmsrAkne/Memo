@@ -131,3 +131,23 @@ Rider の場合は、プロジェクトの設定等の画面からは弄れな�
 自分で直接設定ファイルを作ることもできるようだが（やり方を見ただけで未実施）手間がかかりそう。
 
 通常、やむを得ず VS が使用できないような場合を除けばやる理由はないか。
+
+## Debug Output の表示
+
+`Debug` タブの `Debug Output` タブに関して。`Debug.WriteLine` の出力を確認する際に使ったりするやつ。
+
+これがビルドした際に他のタブに切り替わってしまう挙動。毎回タブを切り替えるのが手間すぎる。
+
+`Debug Output` タブの上で右クリックで出てくる項目
+
+    v Focus On Startup
+    v Focus On Breakpoint
+    v Focus On Finish
+
+上記のように全チェックで切り替わらなくなる。
+
+これ以外にも設定画面の下記項目にもオプションが存在している。
+
+Settings -> Build, Execution, Deployment -> Debugger 
+
+設定時はこちらも確認する。
