@@ -80,4 +80,5 @@ ConEmu で使おうとするとで `permission denied` が表示される。要�
 
 	winget install -e --id Docker.DockerDesktop
 	winget install -e --id JetBrains.ToolBox
+	winget install -e --id OpenJS.NodeJS.LTS
 	winget install --id PostgreSQL.PostgreSQL
