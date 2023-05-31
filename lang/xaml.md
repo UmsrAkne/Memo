@@ -116,3 +116,21 @@ Style をキー無しで宣言した場合、型に対してデフォルトで�
 
 	<!-- Double を使った例>
 	<system:Double x:Key="DateTimeColumnWidth">110.0</system:Double>
+
+## キャスト（型注釈）
+
+	<MenuItem
+		Command="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu},
+						  Path=PlacementTarget.(ListViewItem.Tag).(viewModels:MainWindowViewModel.StartTodoCommand)}"
+
+		CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu},
+						  Path=PlacementTarget.(ListViewItem.Content)}"
+		/>
+
+なんらかの理由で、IDEが型が認識しない場合や、確定ができない場合、
+
+	(TypeName.Property)
+	(NameSpace:TypeName.Property)
+
+この書式を使うことで、型を明示することができる。  
+名前空間の宣言はその場で行えば問題ない。
