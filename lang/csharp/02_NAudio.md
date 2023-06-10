@@ -90,4 +90,16 @@ Enumerator とあるので、多分アプリ別の音量出力の設定もでき
 `WaveOutEvent.Init()` に型違いのため、`VorbisWaveReader `が入らなかった。  
 必要なインターフェースを実装していないのが原因だったが、ネットのサンプルと違う。
 
-要調査。
+	var file = new FileInfo(@"se01.ogg");
+	var reader = new NAudio.Vorbis.VorbisWaveReader(file.FullName);
+	var waveout = new NAudio.Wave.WaveOutEvent();
+	waveout.Init(reader);
+	waveout.Play();
+
+確認してみたところ、バージョンによる問題らしい。  
+`NAudio` の側のバージョンを `2.1.0` にしてみたところ、上記のコードで ogg の再生ができることが判明した。
+
+ただし、ターゲットフレームワークのバージョンとの兼ね合いがある。  
+
+NAudio の該当バージョンは古い .Net のバージョンでは使用不可。  
+古いバージョンを使わざるを得ない場合は、別の手段が必要。
