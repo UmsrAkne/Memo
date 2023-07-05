@@ -43,6 +43,17 @@
 
     > git config --global core.editor 'C:/NonRegistry/vim82/gvim.exe'
 
+## Vivaldi
+
+アドオンを導入する。
+
+    AdBlock
+    uBlacklist
+    Vimium
+    Stylus
+
+履歴はデフォルトでは 3ヶ月 で消滅する設定なので、必要なら変更する。
+
 ## Windows 自体の設定
 
 設定 -> システム -> マルチタスク
