@@ -55,9 +55,7 @@ ConEmu で使おうとするとで `permission denied` が表示される。要�
 
 	winget install -e --id Apple.iTunes
 	winget install -e --id CodeJelly.Launchy
-	winget install -e --id CrystalDewWorld.CrystalDiskMark
 	winget install -e --id DBBrowserForSQLite.DBBrowserForSQLite
-	winget install -e --id ESET.Security
 
 	winget install -e --id Git.Git
 	winget install -e --id GitHub.cli
@@ -75,10 +73,16 @@ ConEmu で使おうとするとで `permission denied` が表示される。要�
 	winget install -e --id VivaldiTechnologies.Vivaldi
 	winget install -e --id vim.vim
 	winget install -e --id voidtools.Everything
-	winget install -e --id RARLab.WinRAR 
 	winget install -e --id TheDocumentFoundation.LibreOffice
 
 	winget install -e --id Docker.DockerDesktop
 	winget install -e --id JetBrains.ToolBox
 	winget install -e --id OpenJS.NodeJS.LTS
 	winget install --id PostgreSQL.PostgreSQL
+
+## 導入に失敗したもの
+
+インストール直前までは行くものの、エラーで失敗したもの。
+
+	winget install -e --id CrystalDewWorld.CrystalDiskMark
+	winget install -e --id RARLab.WinRAR 
