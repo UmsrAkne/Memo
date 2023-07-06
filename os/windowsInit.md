@@ -61,6 +61,14 @@
 
 履歴はデフォルトでは 3ヶ月 で消滅する設定なので、必要なら変更する。
 
+Stylus の css には以下の内容を記述。画像全消し。
+
+    img,
+    iframe {
+        visibility: hidden !important;
+        display: none !important;
+    }
+
 ### データの復元
 
 復元元のメニュー
