@@ -151,3 +151,37 @@ Rider の場合は、プロジェクトの設定等の画面からは弄れな�
 Settings -> Build, Execution, Deployment -> Debugger 
 
 設定時はこちらも確認する。
+
+## Unity で Rider を使う
+
+使おうとするとぞろぞろと通知が出てくる。それぞれ和訳していく。
+
+    Update available - JetBrains Rider package.
+    Check for JetBrains Rider package 3.0.24 in Unity Package Manager.
+
+    # Unity の Rider package が利用可能。Rider の方ではなく、Unity のパッケージマネージャーを開いてパッケをインストールする。
+
+---
+
+    Advanced Unity integration is unavailable
+    Make sure JetBrains Rider Editor is installed in Unity’s Package Manager and Rider 2023.1.3 is set as the External Editor.
+
+    # Unity の外部エディタを Rider にしてるか確認してきている。
+    # 多分エディタが Visual Studio とかに設定されている。
+    # ちゃんと指定しないと、ツール間の連携が満足にできないので必ず指定する。
+
+---
+
+    Microsoft Defender configuration
+
+    The IDE has detected Microsoft Defender with Real-Time Protection enabled. It might severely degrade IDE performance. It is recommended to add following paths to the Defender folder exclusion list:
+
+    フォルダパスのリスト
+    ...
+
+    Choose "Automatically" to run a script that excludes these paths (note: Windows will ask for administrative privileges). Choose "Manually" to see Defender configuration instructions.
+
+    # Microsoft Defender のリアルタイム保護が有効になっていると出てくる警告。
+    # リストのフォルダを保護から除外してくれないとアプリのパフォーマンスが落ちるらしい。
+    # 管理者権限があれば、スクリプトを実行して自動で除外リストにフォルダを加えてくれる。ある場合は使う。
+    # ない場合は手動で。
