@@ -45,7 +45,26 @@ ConEmu で使おうとするとで `permission denied` が表示される。要�
 
 ## 一括で導入したいソフト一覧
 
+## 全マシンに導入
+
 	winget install -e --id Microsoft.VisualStudioCode
+	winget install -e --id Apple.iTunes
+	winget install -e --id CodeJelly.Launchy
+	winget install -e --id Git.Git
+	winget install -e --id Google.Chrome
+	winget install -e --id Google.JapaneseIME
+	winget install -e --id Lexikos.AutoHotkey
+	winget install -e --id Maximus5.ConEmu
+	winget install -e --id Mozilla.Firefox
+	winget install -e --id VivaldiTechnologies.Vivaldi
+	winget install -e --id voidtools.Everything
+	winget install -e --id VideoLAN.VLC
+	winget install -e --id TheDocumentFoundation.LibreOffice
+
+## 開発マシン専用
+
+	winget install -e --id GitHub.cli
+
 	winget install -e --id Microsoft.VisualStudio.2019.Community
 	winget install -e --id Microsoft.VisualStudio.2022.Community
 	winget install -e --id Microsoft.OpenJDK.17
@@ -53,28 +72,13 @@ ConEmu で使おうとするとで `permission denied` が表示される。要�
 	winget install -e --id Microsoft.DotNet.SDK.5
 	winget install -e --id Microsoft.DotNet.SDK.6
 
-	winget install -e --id Apple.iTunes
-	winget install -e --id CodeJelly.Launchy
-	winget install -e --id DBBrowserForSQLite.DBBrowserForSQLite
-
-	winget install -e --id Git.Git
-	winget install -e --id GitHub.cli
-
 	winget install -e --id Google.AndroidStudio
-	winget install -e --id Google.Chrome
-	winget install -e --id Google.JapaneseIME
 
-	winget install -e --id Lexikos.AutoHotkey
-	winget install -e --id Maximus5.ConEmu
-	winget install -e --id Mozilla.Firefox
+	winget install -e --id DBBrowserForSQLite.DBBrowserForSQLite
 	winget install -e --id SnoopWpf.Snoop
 	winget install -e --id Twilio.Authy
 	winget install -e --id UnityTechnologies.UnityHub
-	winget install -e --id VivaldiTechnologies.Vivaldi
 	winget install -e --id vim.vim
-	winget install -e --id voidtools.Everything
-	winget install -e --id TheDocumentFoundation.LibreOffice
-	winget install -e --id VideoLAN.VLC
 
 	winget install -e --id Docker.DockerDesktop
 	winget install -e --id JetBrains.Toolbox
