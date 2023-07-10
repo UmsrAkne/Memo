@@ -74,6 +74,7 @@ ConEmu で使おうとするとで `permission denied` が表示される。要�
 	winget install -e --id vim.vim
 	winget install -e --id voidtools.Everything
 	winget install -e --id TheDocumentFoundation.LibreOffice
+	winget install -e --id VideoLAN.VLC
 
 	winget install -e --id Docker.DockerDesktop
 	winget install -e --id JetBrains.Toolbox
