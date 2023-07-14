@@ -80,6 +80,7 @@ ConEmu で使おうとするとで `permission denied` が表示される。要�
 	winget install -e --id Twilio.Authy
 	winget install -e --id UnityTechnologies.UnityHub
 	winget install -e --id vim.vim
+	winget install -e --id ImageMagick.ImageMagick
 
 	winget install -e --id Docker.DockerDesktop
 	winget install -e --id JetBrains.Toolbox
