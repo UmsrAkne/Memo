@@ -61,6 +61,7 @@ ConEmu で使おうとするとで `permission denied` が表示される。要�
 	winget install -e --id VideoLAN.VLC
 	winget install -e --id TheDocumentFoundation.LibreOffice
 	winget install -e --id 7zip.7zip
+	winget install -e --id Microsoft.PowerToys
 
 ## 開発マシン専用
 
