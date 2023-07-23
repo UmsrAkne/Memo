@@ -261,3 +261,6 @@ Stylus の css には以下の内容を記述。画像全消し。
 
     rem タスクバーの結合をしない
     reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "TaskbarGlomLevel" /t REG_DWORD /d "2" /f
+
+    rem 詳細な分析が必要な場合はファイルのサンプルを送信する
+    reg add "HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows Defender\Spynet" /v "SubmitSamplesConsent" /t REG_DWORD /d "2" /f
