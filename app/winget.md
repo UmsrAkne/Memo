@@ -83,6 +83,7 @@ ConEmu で使おうとするとで `permission denied` が表示される。要�
 	winget install -e --id vim.vim
 	winget install -e --id ImageMagick.ImageMagick
 
+	winget install -e --id TeraTermProject.teraterm
 	winget install -e --id Docker.DockerDesktop
 	winget install -e --id JetBrains.Toolbox
 	winget install -e --id OpenJS.NodeJS.LTS
