@@ -143,16 +143,6 @@ Stylus の css には以下の内容を記述。画像全消し。
 
 チェックを外す。Windowsキーでウィンドウを整列した際、画面半分にウィンドウのサムネイルが並ぶ機能をオフにする。
 
-## Windows のウェブ検索を無効化
-
-    Windows Registry Editor Version 5.00
-
-    [HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Search]
-    "CortanaConsent"=dword:00000000
-    "BingSearchEnabled"=dword:00000000
-
-新規テキストファイルを作成し、上記をコピペ。`xxx.reg` とか適当な名前をつけて保存してダブルクリック。
-
 ## レジストリ変更用バッチ
 
 初期設定時に設定する内容（主に無効にする項目）をレジストリの編集によって実現するバッチが以下。
@@ -264,3 +254,7 @@ Stylus の css には以下の内容を記述。画像全消し。
 
     rem 詳細な分析が必要な場合はファイルのサンプルを送信する
     reg add "HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows Defender\Spynet" /v "SubmitSamplesConsent" /t REG_DWORD /d "2" /f
+
+    rem スタートメニューからのウェブ検索無効
+    reg add "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Search" /v "BingSearchEnabled" /t REG_DWORD /d "0" /f
+    reg add "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Search" /v "CortanaConsent" /t REG_DWORD /d "0" /f
