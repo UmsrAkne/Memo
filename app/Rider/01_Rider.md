@@ -185,3 +185,23 @@ Settings -> Build, Execution, Deployment -> Debugger
     # リストのフォルダを保護から除外してくれないとアプリのパフォーマンスが落ちるらしい。
     # 管理者権限があれば、スクリプトを実行して自動で除外リストにフォルダを加えてくれる。ある場合は使う。
     # ない場合は手動で。
+
+## 新しいプロジェクトテンプレートを導入する
+
+コマンドプロンプトを起動して以下のコマンドで導入完了。
+
+    > dotnet new --install "Prism.Templates"
+
+ソースは以下のページを参照。
+
+    https://dotnetnew.azurewebsites.net/template/Prism.Templates/Prism.Wpf.Blank.Core.CSharp
+
+執筆時点で `dotnet` をインストールした覚えはないので、他のアプリを導入する際に一緒に入ったものと思われる。
+
+`dotnet` コマンドについては、MSのドキュメントが検索上位に上がってくる。
+
+ただし、今回はひとまず概要だけ確認できればいいので、下記のページの説明を参照。
+
+ascii の解説によると、`.netSDK` のインストールが必要らしい。
+
+    https://ascii.jp/elem/000/004/082/4082000/
