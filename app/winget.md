@@ -47,22 +47,23 @@ ConEmu で使おうとするとで `permission denied` が表示される。要�
 
 ## 全マシンに導入
 
-	winget install -e --id Microsoft.VisualStudioCode
-	winget install -e --id Apple.iTunes
-	winget install -e --id CodeJelly.Launchy
-	winget install -e --id Git.Git
-	winget install -e --id Google.Chrome
+	# 優先順位 降順
 	winget install -e --id Google.JapaneseIME
+	winget install -e --id VivaldiTechnologies.Vivaldi
+	winget install -e --id Google.Chrome
+	winget install -e --id Mozilla.Firefox
+	winget install -e --id Microsoft.PowerToys
+	winget install -e --id Microsoft.VisualStudioCode
+	winget install -e --id Git.Git
+	winget install -e --id CodeJelly.Launchy
 	winget install -e --id Lexikos.AutoHotkey
 	winget install -e --id Maximus5.ConEmu
-	winget install -e --id Mozilla.Firefox
-	winget install -e --id VivaldiTechnologies.Vivaldi
 	winget install -e --id voidtools.Everything
 	winget install -e --id VideoLAN.VLC
-	winget install -e --id TheDocumentFoundation.LibreOffice
-	winget install -e --id 7zip.7zip
-	winget install -e --id Microsoft.PowerToys
+	winget install -e --id Apple.iTunes
 	winget install -e --id LIGHTNINGUK.ImgBurn
+	winget install -e --id 7zip.7zip
+	winget install -e --id TheDocumentFoundation.LibreOffice
 
 ## 開発マシン専用
 
