@@ -52,8 +52,8 @@ ConEmu で使おうとするとで `permission denied` が表示される。要�
 	winget install -e --id VivaldiTechnologies.Vivaldi
 	winget install -e --id Google.Chrome
 	winget install -e --id Mozilla.Firefox
-	winget install -e --id Microsoft.PowerToys
 	winget install -e --id Microsoft.VisualStudioCode
+	winget install -e --id Microsoft.PowerToys
 	winget install -e --id Git.Git
 	winget install -e --id CodeJelly.Launchy
 	winget install -e --id Lexikos.AutoHotkey
@@ -89,6 +89,7 @@ ConEmu で使おうとするとで `permission denied` が表示される。要�
 	winget install -e --id Docker.DockerDesktop
 	winget install -e --id JetBrains.Toolbox
 	winget install -e --id OpenJS.NodeJS.LTS
+	winget install -e --id Audacity.Audacity
 	winget install --id PostgreSQL.PostgreSQL
 
 ## 導入に失敗したもの
