@@ -63,6 +63,7 @@ ConEmu で使おうとするとで `permission denied` が表示される。要�
 	winget install -e --id Apple.iTunes
 	winget install -e --id LIGHTNINGUK.ImgBurn
 	winget install -e --id 7zip.7zip
+	winget install -e --id CodeSector.TeraCopy
 	winget install -e --id TheDocumentFoundation.LibreOffice
 
 ## 開発マシン専用
