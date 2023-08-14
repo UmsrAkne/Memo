@@ -216,7 +216,7 @@ Stylus の css には以下の内容を記述。画像全消し。
     rem ときどきスタート画面におすすめを表示する
     reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v "SystemPaneSuggestionsEnabled" /t REG_DWORD /d "0" /f
 
-    remロック画面にトリビアやヒントなどの情報を表示する
+    rem ロック画面にトリビアやヒントなどの情報を表示する
     reg add "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\ContentDeliveryManager" /v "RotatingLockScreenOverlayEnabled" /t REG_DWORD /d "0" /f
 
     rem システム-マルチタスク-スナップされたウィンドウのサイズを変更するときに、隣接するスナップ ウィンドウのサイズも同時に変更する
