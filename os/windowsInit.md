@@ -262,3 +262,7 @@ Stylus の css には以下の内容を記述。画像全消し。
     rem One Drive を無効にする
     reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\OneDrive" /v "DisableFileSyncNGSC" /t REG_DWORD /d "1" /f
 
+    rem Edge のデスクトップ検索バー (Win + Shift + f) を無効にする。 
+    rem Power Shell から実際に実行し、有効であることを確認。
+    rem ただし、実行後即時有効にはならず、Edge を起動後、同アプリのアドレスバーに Edge://restart/ を入力、確定後に有効となった。
+    reg add "HKLM\SOFTWARE\Policies\Microsoft\Edge" /v WebWidgetAllowed /t REG_DWORD /d 0 /f
