@@ -59,6 +59,7 @@ ConEmu で使おうとするとで `permission denied` が表示される。要�
 	winget install -e --id Lexikos.AutoHotkey
 	winget install -e --id Maximus5.ConEmu
 	winget install -e --id voidtools.Everything
+	winget install -e --id File-New-Project.EarTrumpet
 	winget install -e --id VideoLAN.VLC
 	winget install -e --id Apple.iTunes
 	winget install -e --id LIGHTNINGUK.ImgBurn
