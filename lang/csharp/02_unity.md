@@ -218,3 +218,9 @@ Unity のメニューから Window -> General -> Test Runner からテスト用�
 
 	# startUnity.sh
 	./text.exe -screen-width 1280 -screen-height 720 
+
+## オブジェクトの重なり順
+
+	SpriteRenderer.OrderInLayer : 数値が大きいほど手前に表示される
+	SpriteRenderer.SortingLayer : レイヤーリストで下にあるレイヤーほど手前に表示される。
+	ヒエラルキーウィンドウ : 下に表示されているものほど手前に表示される。
