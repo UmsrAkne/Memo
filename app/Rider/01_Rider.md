@@ -205,3 +205,18 @@ Settings -> Build, Execution, Deployment -> Debugger
 ascii の解説によると、`.netSDK` のインストールが必要らしい。
 
     https://ascii.jp/elem/000/004/082/4082000/
+
+## アプリが起動できなくなった
+
+以下のメッセージが表示され、アプリが起動できなくなった。
+
+    Cannot connect to already running IDE instance.
+    
+以下のディレクトリの中にある `.lock` ファイルを探して削除することで起動できる。
+
+    C:\Users\UseName\AppData\Roaming\JetBrains\IDEName
+
+`IDEName` では使っている IDE の名前が入る。
+
+複数のバージョンを導入していると、その数だけディレクトリができるので、起動できなくなったバージョンを適宜探す。
+    
