@@ -93,6 +93,7 @@ ConEmu で使おうとするとで `permission denied` が表示される。要�
 	winget install -e --id JetBrains.Toolbox
 	winget install -e --id OpenJS.NodeJS.LTS
 	winget install -e --id Audacity.Audacity
+	winget install -e --id Datronicsoft.SpacedeskDriver.Server
 	winget install --id PostgreSQL.PostgreSQL
 
 ## 導入に失敗したもの
