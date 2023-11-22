@@ -38,3 +38,12 @@ C# で Youtrack にアクセスするためのパッケージ。
     var projectsForCurrentUser = await projectsService.GetAccessibleProjects();
     var projects = projectsForCurrentUser.ToList();
 
+以下はプロジェクトの issue のリストを取得するコード。
+
+    BearerTokenConnection connection = new BearerTokenConnection("url", "perm");
+    var issuesService = connection.CreateIssuesService();
+
+    // Project.ShortName でプロジェクトの ID を取得できる。
+    var issues = await issuesService.GetIssuesInProject(shortName);
+
+
