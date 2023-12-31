@@ -43,6 +43,10 @@ ConEmu で使おうとするとで `permission denied` が表示される。要�
 
 	$ winget install --id -e packagename
 
+バージョンを指定して導入する場合は以下。デフォルトは最新版が導入される。
+
+    $ winget install packagename --version 1.0.0
+
 ## 一括で導入したいソフト一覧
 
 ## 全マシンに導入
