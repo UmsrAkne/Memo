@@ -53,7 +53,7 @@ ConEmu で使おうとするとで `permission denied` が表示される。要�
 
 	# 優先順位 降順
 	winget install -e --id Google.JapaneseIME
-	winget install -e --id VivaldiTechnologies.Vivaldi
+	winget install -e --id Vivaldi.Vivaldi
 	winget install -e --id Google.Chrome
 	winget install -e --id Mozilla.Firefox
 	winget install -e --id Microsoft.VisualStudioCode
