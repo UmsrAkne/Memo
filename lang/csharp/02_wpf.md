@@ -428,3 +428,48 @@ MainWindow.WindowState に値を代入することでウィンドウの状態を
     // WindowState.Maximized
     // WindowState.Minimized
     // WindowState.Normal
+
+## MainWindow に配置した Page に DataContext をセットする
+
+### 概要
+
+`Frame` を使って配置した Page には、親のデータコンテキストが継承されない。
+
+`Frame` には特殊な仕様が存在するらしく、 以下のソースコードの `Pg1` や、その親の `Frame` にデータコンテキストをセットしても反映されない。
+
+`MainWindow.xaml`
+
+    <StackPanel Orientation="Horizontal">
+        <Button
+            Command="{Binding SetDcCommand}"
+            CommandParameter="{Binding ElementName=Pg1}"
+            Content="Cmd" />
+    </StackPanel>
+
+    <Frame>
+        <Frame.Content>
+            <views:Page1 x:Name="Pg1" />
+        </Frame.Content>
+    </Frame>
+
+---
+
+`MainWindowViewModel.cs`
+
+    public DelegateCommand<Page> SetDcCommand => new DelegateCommand<Page>((param) =>
+    {
+        param.DataContext = this;
+    });
+
+### 解説
+
+結論から言うと、xaml 上で直接データコンテキストをセットする方法は確認できなかった。
+
+しかし、`ElementName` を使って Page を取得することは可能な模様。ビジュアルツリー上は繋がっている？  
+`CommandParameter` で `Page` を受け取り、データコンテキストをセットできる。
+
+未確認だが、同じ理屈で、`Interacion.Triggers` の `EventTrigger` を使ったセットも可能だと思われる。
+
+いずれの方法もイレギュラー感が強い。
+
+どうしても `Page` でないとダメ。という場合を除いて `UserControl` を使ったほうが簡単で確実。
