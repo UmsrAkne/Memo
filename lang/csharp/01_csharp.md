@@ -119,6 +119,51 @@ C# の機能。`$` のあとに続くリテラル内で変数等をそのまま�
 
     $"{variable}{method()}, string"
 
+## 画像ファイルのメタデータの読み込み
+
+AIで生成したイラストに埋め込まれているメタデータを読み取る。
+
+    try
+    {
+        var frame = BitmapFrame.Create(new Uri(FileInfo.FullName));
+
+        if (frame.Metadata == null)
+        {
+            return metaData;
+        }
+
+        var m = (BitmapMetadata)frame.Metadata;
+
+        if (m.Any(query => query.StartsWith("/tEXt")))
+        {
+            metaData = new ImageDetail(m.GetQuery("/tEXt/{str=parameters}") as string);
+            return metaData;
+        }
+    }
+    catch (Exception e)
+    {
+        Debug.WriteLine(e);
+        Debug.WriteLine("画像の読み込みに失敗しました");
+        throw;
+    }
+
+プロジェクトのコードを直貼りしているので、余計なコードが入っているが、チェックするべき部分は多くない。
+
+まず `BitmapFrame.Create` で画像を読み取る。このクラスはコンストラクタが `public` ではないため `new()` はできない。
+
+画像を読み取れるクラスとして `WPF` では、`System.Windows.Media.Imaging.BitmapImage` があるが、こちらでは `Metadata` プロパティがサポートされておらず、`NotSupportedException` がスローされるため不可。
+
+その後、`Metadata` が含まれるかを確認し、`BitmapMetadata` にキャストして `m` に格納する。
+
+`m.GetQuery()` するとメタデータを取得できる。サンプルコードでは string にキャストしている。
+
+### 備考
+
+詳しくは確認していないが、メタデータはディレクトリのような構造でアクセスするらしい。
+
+`m.GetQuery("/tEXt")` とすると `{str=parameters}` というデータが取得できる。
+  そして更にこの中に生成に使った各種パラメーターの文字列が格納されている。サンプルコードでもこれにアクセスしてデータを取得している。
+
 ## その他のメモ
 
 C# では改行コード `"\r"`, `"\n"` は各自１文字扱い。例えば、`"test\r\n".Length` の戻り価は `6` となる。
