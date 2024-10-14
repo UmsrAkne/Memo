@@ -19,6 +19,10 @@ ConEmu で使おうとするとで `permission denied` が表示される。要�
 
 	install		# 指定されたアプリケーションをインストールします。
 	show		# 指定されたアプリケーションの詳細を表示します。
+	
+	# 使用例
+	winget show vim.vim --versions # パッケージ vim のインストール可能なバージョンを表示。
+
 	search		# アプリケーションを検索します。
 	list		# インストール済みパッケージを表示します。
 	upgrade		# 指定したパッケージをアップグレードします。
@@ -89,7 +93,7 @@ ConEmu で使おうとするとで `permission denied` が表示される。要�
 	winget install -e --id SnoopWpf.Snoop
 	winget install -e --id Twilio.Authy
 	winget install -e --id UnityTechnologies.UnityHub
-	winget install -e --id vim.vim
+	winget install -e --id vim.vim --version 9.1.0718
 	winget install -e --id ImageMagick.ImageMagick
 
 	winget install -e --id TeraTermProject.teraterm
