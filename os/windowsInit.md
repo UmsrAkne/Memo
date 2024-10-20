@@ -266,3 +266,6 @@ Stylus の css には以下の内容を記述。画像全消し。
     rem Power Shell から実際に実行し、有効であることを確認。
     rem ただし、実行後即時有効にはならず、Edge を起動後、同アプリのアドレスバーに Edge://restart/ を入力、確定後に有効となった。
     reg add "HKLM\SOFTWARE\Policies\Microsoft\Edge" /v WebWidgetAllowed /t REG_DWORD /d 0 /f
+
+    rem 全ての処理が終了したあと、待機する。
+    pause
