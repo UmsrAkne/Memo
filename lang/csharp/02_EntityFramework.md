@@ -306,3 +306,208 @@ DBコンテキストクラスを作成する。以下の `using` が必要とな
 今回は `DbContext` をシングルトンで運用していたため、できれば再生成は避けたかったのだが。
 
 `DbContext` インスタンスを生成し直して最初から設定をやり直せば問題はないけど、何かやり方が間違っていた？
+
+## ChatGPT さんに聞いた
+
+C# の WPF アプリで Entity Framework Core を使い、SQLite のデータベースを操作できるようにし、リポジトリパターンでデータアクセスを構成する手順を以下に示します。
+
+### 前提条件
+
+Visual Studio や他の .NET 開発環境がインストールされていること
+WPF プロジェクトが作成済みであること
+
+### 手順
+
+1. Entity Framework Core のパッケージをインストール
+NuGet パッケージ マネージャーで次のコマンドを使ってインストールします。
+
+		dotnet add package Microsoft.EntityFrameworkCore
+		dotnet add package Microsoft.EntityFrameworkCore.Sqlite
+		dotnet add package Microsoft.EntityFrameworkCore.Tools
+
+これにより、EF Core、SQLite プロバイダ、およびツールが追加されます。
+
+2. データベース コンテキストを作成
+
+アプリに必要なモデルクラスと DbContext クラスを定義します。  
+まず、モデルクラスを作成します。例として、Product クラスを定義します。
+
+		public class Product
+		{
+			public int Id { get; set; }
+			public string Name { get; set; }
+			public decimal Price { get; set; }
+		}
+
+次に、DbContext クラスを作成します。
+
+		using Microsoft.EntityFrameworkCore;
+
+		public class AppDbContext : DbContext
+		{
+			public DbSet<Product> Products { get; set; }
+
+			protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+			{
+				const string dbFileName = "db.sqlite";
+				if (!File.Exists(dbFileName))
+				{
+					using var connection = new SqliteConnection($"Data Source={dbFileName}");
+					connection.Open();
+					connection.Close();
+				}
+
+				var connectionString = new SqliteConnectionStringBuilder { DataSource = dbFileName, }.ToString();
+				optionsBuilder.UseSqlite(new SqliteConnection(connectionString));
+			}
+		}
+
+OnConfiguring メソッドで SQLite をデータベースとして設定しています。  
+
+3. リポジトリ インターフェイスの作成
+
+リポジトリ パターンに従い、IRepository<T> インターフェイスを定義します。
+
+		public interface IRepository<T> where T : class
+		{
+			Task<T> GetByIdAsync(int id);
+			Task<IEnumerable<T>> GetAllAsync();
+			Task AddAsync(T entity);
+			Task UpdateAsync(T entity);
+			Task DeleteAsync(int id);
+		}
+
+4. リポジトリ実装の作成
+
+IRepository インターフェイスを実装した Repository クラスを作成します。
+
+		using Microsoft.EntityFrameworkCore;
+		using System.Collections.Generic;
+		using System.Threading.Tasks;
+
+		public class Repository<T> : IRepository<T> where T : class
+		{
+			private readonly AppDbContext _context;
+			private readonly DbSet<T> _dbSet;
+
+			public Repository(AppDbContext context)
+			{
+				_context = context;
+				_dbSet = context.Set<T>();
+			}
+
+			public async Task<T> GetByIdAsync(int id)
+			{
+				return await _dbSet.FindAsync(id);
+			}
+
+			public async Task<IEnumerable<T>> GetAllAsync()
+			{
+				return await _dbSet.ToListAsync();
+			}
+
+			public async Task AddAsync(T entity)
+			{
+				await _dbSet.AddAsync(entity);
+				await _context.SaveChangesAsync();
+			}
+
+			public async Task UpdateAsync(T entity)
+			{
+				_dbSet.Update(entity);
+				await _context.SaveChangesAsync();
+			}
+
+			public async Task DeleteAsync(int id)
+			{
+				var entity = await GetByIdAsync(id);
+				if (entity != null)
+				{
+					_dbSet.Remove(entity);
+					await _context.SaveChangesAsync();
+				}
+			}
+		}
+
+5. サービス層の作成（任意）
+
+リポジトリパターンに沿って、サービス層を作成することで、ビジネスロジックを追加する場合に便利です。
+
+		public class ProductService
+		{
+			private readonly IRepository<Product> _productRepository;
+
+			public ProductService(IRepository<Product> productRepository)
+			{
+				_productRepository = productRepository;
+			}
+
+			public Task<IEnumerable<Product>> GetProductsAsync()
+			{
+				return _productRepository.GetAllAsync();
+			}
+
+			public Task AddProductAsync(Product product)
+			{
+				return _productRepository.AddAsync(product);
+			}
+
+			// 他のメソッドも同様に定義できます
+		}
+
+6. DIコンテナでリポジトリとサービスを登録
+WPF アプリでは、DI（依存性注入）を設定します。
+
+App.xaml.cs の Application_Startup メソッドで DI コンテナを設定します。
+
+必要に応じて MainWindow にサービスやリポジトリを注入します。
+
+※生成されたコードが通らなかったので、自前のコードを流用。
+
+		using Microsoft.Extensions.DependencyInjection;
+
+		public partial class App : Application
+		{
+			protected override void RegisterTypes(IContainerRegistry containerRegistry)
+			{
+				containerRegistry.RegisterDialog<TextInputDialog, TextInputDialogViewModel>();
+				containerRegistry.RegisterDialog<FileCopyDialog, FileCopyDialogViewModel>();
+				containerRegistry.RegisterSingleton<DatabaseContext>();
+
+				var d = Container.Resolve<DatabaseContext>();
+				d.Database.EnsureCreated();
+			}
+		}
+
+7. WPF画面でリポジトリまたはサービスを利用
+
+最後に、WPF のコードビハインドや ViewModel で ProductService を利用します。
+
+		public partial class MainWindow : Window
+		{
+			private readonly ProductService _productService;
+
+			public MainWindow(ProductService productService)
+			{
+				InitializeComponent();
+				_productService = productService;
+			}
+
+			private async void OnLoadProducts(object sender, RoutedEventArgs e)
+			{
+				var products = await _productService.GetProductsAsync();
+				// データバインディングや UI 更新をここで行います
+			}
+		}
+
+DIコンテナからは `IContainerProvider` を使ってDBコンテキストを取り出すと良い。
+
+#### 補足
+
+ProductService や Repository を通して、SQLite データベースのデータを CRUD 操作できます。
+
+初回実行時に app.db が自動で作成されますが、必要に応じて AppDbContext の OnModelCreating メソッドで初期データを設定できます。
+
+以上で、Entity Framework Core を用いたリポジトリパターンによるデータベース処理の基本的な実装が完了します。
+
+以上チャットGPTさんより生成したものに一部加筆修正しました。
