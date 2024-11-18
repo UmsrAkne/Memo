@@ -41,6 +41,10 @@ dialogs は任意の名前空間名。
 固定値の桁数合わせだけならコンバーターは不要。以下3桁の例。
 
     <TextBlock Text="{Binding Value, StringFormat=商品A {0:D3} 円}"/>
+    
+`StringFormat={0:D3}` という表記は不可。フォーマット指定子よりも前に `{}` を入れる必要がある。
+
+    <TextBlock Text="{Binding Value, StringFormat={}{0:D3} 円}"/>
 
 下記の場合はそのままの数値を表示する。
 
