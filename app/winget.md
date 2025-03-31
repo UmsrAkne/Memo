@@ -64,7 +64,7 @@ ConEmu で使おうとするとで `permission denied` が表示される。要�
 	winget install -e --id Microsoft.PowerToys
 	winget install -e --id Git.Git
 	winget install -e --id CodeJelly.Launchy
-	winget install -e --id Lexikos.AutoHotkey
+	winget install -e --id AutoHotkey.AutoHotkey
 	winget install -e --id Maximus5.ConEmu
 	winget install -e --id voidtools.Everything
 	winget install -e --id File-New-Project.EarTrumpet
