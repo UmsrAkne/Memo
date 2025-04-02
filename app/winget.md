@@ -88,7 +88,7 @@ ConEmu で使おうとするとで `permission denied` が表示される。要�
 	winget install -e --id DBBrowserForSQLite.DBBrowserForSQLite
 	winget install -e --id SnoopWpf.Snoop
 	winget install -e --id Twilio.Authy
-	winget install -e --id vim.vim --version 9.1.0718
+	winget install -e --id vim.vim
 	winget install -e --id ImageMagick.ImageMagick
 
 	winget install -e --id TeraTermProject.teraterm
