@@ -53,9 +53,7 @@ ConEmu で使おうとするとで `permission denied` が表示される。要�
 
 ## 一括で導入したいソフト一覧
 
-## 全マシンに導入
-
-	# 優先順位 降順
+	REM 全マシンに導入 優先順位 降順
 	winget install -e --id Google.JapaneseIME
 	winget install -e --id Vivaldi.Vivaldi
 	winget install -e --id Google.Chrome
@@ -73,38 +71,43 @@ ConEmu で使おうとするとで `permission denied` が表示される。要�
 	winget install -e --id LIGHTNINGUK.ImgBurn
 	winget install -e --id 7zip.7zip
 	winget install -e --id CodeSector.TeraCopy
-	winget install -e --id TheDocumentFoundation.LibreOffice
 	winget install -e --id Bitwarden.Bitwarden
 	winget install --id Microsoft.DirectX
 
-## 開発マシン専用
+	REM Office スイート
+	winget install -e --id TheDocumentFoundation.LibreOffice
 
+	REM 開発マシン専用
 	winget install -e --id GitHub.cli
 
-	winget install -e --id Microsoft.VisualStudio.2019.Community
-	winget install -e --id Microsoft.VisualStudio.2022.Community
 	winget install -e --id Microsoft.OpenJDK.17
 	winget install -e --id Microsoft.UpdateAssistant
 	winget install -e --id Microsoft.DotNet.SDK.5
 	winget install -e --id Microsoft.DotNet.SDK.6
 
-	winget install -e --id Google.AndroidStudio
-
 	winget install -e --id DBBrowserForSQLite.DBBrowserForSQLite
 	winget install -e --id SnoopWpf.Snoop
 	winget install -e --id Twilio.Authy
-	winget install -e --id UnityTechnologies.UnityHub
 	winget install -e --id vim.vim --version 9.1.0718
 	winget install -e --id ImageMagick.ImageMagick
 
 	winget install -e --id TeraTermProject.teraterm
-	winget install -e --id Docker.DockerDesktop
 	winget install -e --id JetBrains.Toolbox
+	winget install -e --id Datronicsoft.SpacedeskDriver.Server
+
+	REM IDE はファイルサイズが大きいので注意。
+	winget install -e --id Microsoft.VisualStudio.2019.Community
+	winget install -e --id Microsoft.VisualStudio.2022.Community
+	winget install -e --id Google.AndroidStudio
+
+	REM その他必要そうなら導入。
+
+	winget install -e --id UnityTechnologies.UnityHub
+	winget install -e --id Docker.DockerDesktop
+	winget install --id PostgreSQL.PostgreSQL
+    winget install -e --id Python.Python.3.10
 	winget install -e --id OpenJS.NodeJS.LTS
 	winget install -e --id Audacity.Audacity
-	winget install -e --id Datronicsoft.SpacedeskDriver.Server
-    winget install -e --id Python.Python.3.10
-	winget install --id PostgreSQL.PostgreSQL
 
 ## 導入に失敗したもの
 
