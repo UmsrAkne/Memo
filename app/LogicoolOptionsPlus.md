@@ -22,7 +22,7 @@ CMD から行いたい場合は以下のコマンドを使用する。
 
 執筆時点で下記は試し打ちしていないので、コマンドは失敗するかもしれない。実行後要確認。
 
-    reg delete HKEY_LOKAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run /v "Logitech Download Assistant"
+    reg delete HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run /v "Logitech Download Assistant"
 
 ## Windows の設定を使用する方法
 
