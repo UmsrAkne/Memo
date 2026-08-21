@@ -167,3 +167,86 @@ AIで生成したイラストに埋め込まれているメタデータを読み
 ## その他のメモ
 
 C# では改行コード `"\r"`, `"\n"` は各自１文字扱い。例えば、`"test\r\n".Length` の戻り価は `6` となる。
+
+## DI で複数の型をまとめて注入する
+
+`App.xaml.cs` あたりで登録。
+
+```C#
+    protected override void RegisterTypes(IContainerRegistry containerRegistry)
+    {
+        Console.WriteLine("Registering types");
+
+        var settings = AppSettings.Load();
+        Console.WriteLine("Loaded settings");
+        Console.WriteLine($"Settings hash:{settings.GetHashCode()}");
+        containerRegistry.RegisterInstance(settings);
+
+        containerRegistry.Register<IToolAreaViewModel, PointAreaViewModel>();
+        containerRegistry.Register<IToolAreaViewModel, TimeTrackingAreaViewModel>();
+        containerRegistry.Register<IToolAreaViewModel, NoteAreaViewModel>();
+        containerRegistry.Register<IToolAreaViewModel, SettingAreaViewModel>();
+
+        #if DEBUG
+        containerRegistry.Register<ITimeTrackingService, MockTimeTrackingService>();
+        #else
+        containerRegistry.Register<ITimeTrackingService, TimeTrackingService>();
+        #endif
+    }
+```
+
+注入先では `IEnumerable<T>` で、登録した型のインスタンスが全て入ったリストを取得できる。
+
+```C#
+    public MainWindowViewModel(IEnumerable<IToolAreaViewModel> toolAreaViewModels)
+    {
+        Console.WriteLine("Execute: MainWindowViewModel(toolAreaViewModels)");
+        var toolAreaViewModelsList = toolAreaViewModels.ToList();
+        foreach (var toolAreaViewModel in toolAreaViewModelsList)
+        {
+            Console.WriteLine(toolAreaViewModel);
+        }
+
+        ToolAreaViewModels = toolAreaViewModelsList;
+    }
+```
+
+## HttpClient で取得したコンテンツをデバッグ中に確認する
+
+```C#
+    try
+    {
+        var url = $"http://{serverIpv4Address}:{port}{ApiEndPoint}";
+        var response = await HttpClient.GetAsync(url);
+        response.EnsureSuccessStatusCode();
+
+        // 1. 一度 await して文字列として受け取る
+        var jsonString = await response.Content.ReadAsStringAsync();
+        
+        // ここにブレークポイントを置けば、jsonString の中身を確認できます
+        Console.WriteLine(jsonString);
+
+        // 2. 文字列からデシリアライズする
+        var eliteTask = JsonSerializer.Deserialize<TimeEntryResponse>(jsonString);
+        if (eliteTask == null)
+        {
+            return new TimeEntry();
+        }
+
+        return new TimeEntry
+        {
+            StartTime = DateTimeOffset.FromUnixTimeSeconds(eliteTask.T1).LocalDateTime,
+            EndTime = DateTimeOffset.FromUnixTimeSeconds(eliteTask.T2).LocalDateTime,
+            Description = eliteTask.Ds ?? string.Empty,
+        };
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Error fetching active task: {ex.Message}");
+        return new TimeEntry();
+    }
+```
+
+- `ReadAsStringAsync` は非同期メソッドなので、`await` つきで呼び出してから一度変数に格納してアクセスする。
+- そのままアクセスしても Task が返ってきて中身は確認できない。
+- **単純なことだが、焦っていると普通に忘れる。**
